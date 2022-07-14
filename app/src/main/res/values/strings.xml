@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Kampala Clean Toilets</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="rating">Toilet Rating</string>
+
+    <string name="nav_header_title">Francis Ntuuwa</string>
+    <string name="nav_header_subtitle">francis2wx@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+</resources>

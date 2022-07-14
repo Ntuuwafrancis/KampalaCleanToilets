@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/mapFragment">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.map.MapFragment"
+        android:label="Map View"
+        tools:layout="@layout/map_fragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_toiletFragment"
+            app:destination="@id/toiletFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_aboutFragment2"
+            app:destination="@id/aboutFragment2" />
+        <action
+            android:id="@+id/action_mapFragment_to_favoritesFragment2"
+            app:destination="@id/favoritesFragment2" />
+        <action
+            android:id="@+id/action_mapFragment_to_toiletsFragment"
+            app:destination="@id/toiletsFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_userFragment2"
+            app:destination="@id/userFragment2" />
+        <action
+            android:id="@+id/action_mapFragment_to_toiletTipsFragment"
+            app:destination="@id/toiletTipsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/toiletFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.toilet.ToiletFragment"
+        android:label="Toilet Details"
+        tools:layout="@layout/toilet_fragment" >
+        <action
+            android:id="@+id/action_toiletFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/action_toiletFragment_to_reviewsFragment"
+            app:destination="@id/reviewsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/toiletsFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.toilets.ToiletsFragment"
+        android:label="List View"
+        tools:layout="@layout/toilets_fragment" >
+        <action
+            android:id="@+id/action_toiletsFragment_to_toiletFragment"
+            app:destination="@id/toiletFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.review.ReviewFragment"
+        android:label="Review"
+        tools:layout="@layout/review_fragment" />
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.reviews.ReviewsFragment"
+        android:label="Reviews"
+        tools:layout="@layout/reviews_fragment" />
+    <fragment
+        android:id="@+id/aboutFragment2"
+        android:name="com.francosoft.kampalacleantoilets.ui.about.AboutFragment"
+        android:label="About App"
+        tools:layout="@layout/about_fragment" />
+    <fragment
+        android:id="@+id/favoritesFragment2"
+        android:name="com.francosoft.kampalacleantoilets.ui.toilets.favorites.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/favorites_fragment" />
+    <fragment
+        android:id="@+id/userFragment2"
+        android:name="com.francosoft.kampalacleantoilets.ui.user.UserFragment"
+        android:label="Account Settings"
+        tools:layout="@layout/user_fragment" />
+    <fragment
+        android:id="@+id/toiletTipsFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.tips.ToiletTipsFragment"
+        android:label="Toilet Tips"
+        tools:layout="@layout/toilet_tips_fragment" />
+</navigation>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="large_padding">24dp</dimen>
+    <dimen name="low_padding">8dp</dimen>
+    <dimen name="medium_padding">16dp</dimen>
+    <dimen name="ET_dimension">48dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">220dp</dimen>
+    <dimen name="home_cardView_textSize">15sp</dimen>
+</resources>

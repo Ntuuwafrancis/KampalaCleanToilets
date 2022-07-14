@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mapFragment"
+            android:icon="@drawable/ic_baseline_map"
+            android:title="Map View" />
+
+        <item
+            android:id="@+id/toiletsFragment"
+            android:icon="@drawable/ic_baseline_list"
+            android:title="List View" />
+
+        <item
+            android:id="@+id/favoritesFragment2"
+            android:icon="@drawable/ic_baseline_favorite_border"
+            android:title="Favorites" />
+
+        <item
+            android:id="@+id/toiletTipsFragment"
+            android:icon="@drawable/ic_baseline_emoji_objects_24"
+            android:title="Toilet Tips" />
+
+        <item android:title="">
+            <menu>
+
+                <item
+                    android:id="@+id/userFragment2"
+                    android:icon="@drawable/ic_baseline_account_circle"
+                    android:title="Account" />
+
+                <item
+                    android:id="@+id/share"
+                    android:icon="@drawable/ic_baseline_share_24"
+                    android:title="Share" />
+                <item
+                    android:id="@+id/rateApp"
+                    android:icon="@drawable/ic_baseline_thumb_up"
+                    android:title="Rate this app" />
+
+                <item
+                    android:id="@+id/aboutFragment2"
+                    android:icon="@drawable/ic_baseline_info_24"
+                    android:title="About"/>
+
+            </menu>
+        </item>
+
+    </group>
+
+</menu>
