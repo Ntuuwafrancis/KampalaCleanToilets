@@ -1,5 +1,8 @@
 package com.francosoft.kampalacleantoilets.data.models
 
 data class User(
-    val user_id:Int
+    val id:Int,
+    val username: String,
+    val email: String,
+    val privileges: String
 )

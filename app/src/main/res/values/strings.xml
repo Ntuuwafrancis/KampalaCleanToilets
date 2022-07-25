@@ -6,4 +6,19 @@
     <string name="nav_header_title">Francis Ntuuwa</string>
     <string name="nav_header_subtitle">francis2wx@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="toilet_title">Toilet Title</string>
+    <string name="address">Address</string>
+    <string name="latitude">Latitude/Longitude</string>
+    <string name="type">Type</string>
+    <string name="opening_hours">Opening Hours</string>
+    <string name="closing_hours">Closing Hours</string>
+    <string name="availability_status">Availability Status</string>
+    <string name="charge">Charge</string>
+    <string name="operational_status">Operational Status</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="suggest_edit">SUGGEST EDIT</string>
+    <string name="save">SAVE</string>
+    <string name="add_button">add button</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="sign_out">SIGN OUT</string>
 </resources>

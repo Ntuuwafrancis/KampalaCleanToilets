@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/drawable-v24/bg_gradient_dark.xml" value="0.136" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/drawable/bg_gradient.xml" value="0.1" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.136" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/drawable/ic_baseline_tips.xml" value="0.129" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/drawable/splash_background.xml" value="0.1" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/drawable/splash_background_dark.xml" value="0.136" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/about_fragment.xml" value="0.18" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/activity_edit_toilet.xml" value="0.15" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/activity_main.xml" value="0.19753086419753085" />
@@ -18,13 +23,15 @@
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/nav_header.xml" value="0.25" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/review_fragment.xml" value="0.2" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/reviews_fragment.xml" value="0.25" />
-        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/reviews_list_item.xml" value="0.33" />
-        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilet_fragment.xml" value="0.22" />
-        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilet_tips_fragment.xml" value="0.21" />
-        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilets_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/reviews_list_item.xml" value="0.22" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilet_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilet_tips_fragment.xml" value="0.22" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilet_tips_list_item.xml" value="0.1" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilets_fragment.xml" value="0.18" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/toilets_list_item.xml" value="0.25" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/layout/user_fragment.xml" value="0.2248995983935743" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/KampalaCleanToilets/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/toilets_list_item.xml" value="0.23007246376811594" />
       </map>
     </option>
   </component>

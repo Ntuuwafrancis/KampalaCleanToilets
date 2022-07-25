@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.francosoft.kampalacleantoilets.R
+import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
 
 class MapFragment : Fragment() {
 
@@ -29,4 +30,14 @@ class MapFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MapViewModel::class.java)
 
     }
+
+//    override fun onPause() {
+//        super.onPause()
+//        FirebaseUtil.detachListener()
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        FirebaseUtil.attachListener()
+//    }
 }

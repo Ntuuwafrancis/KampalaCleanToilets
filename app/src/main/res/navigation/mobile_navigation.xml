@@ -12,22 +12,32 @@
         tools:layout="@layout/map_fragment" >
         <action
             android:id="@+id/action_mapFragment_to_toiletFragment"
-            app:destination="@id/toiletFragment" />
+            app:destination="@id/toiletFragment"
+            app:popUpTo="@id/mapFragment" />
         <action
             android:id="@+id/action_mapFragment_to_aboutFragment2"
-            app:destination="@id/aboutFragment2" />
+            app:destination="@id/aboutFragment2"
+            app:popUpTo="@id/mapFragment" />
         <action
             android:id="@+id/action_mapFragment_to_favoritesFragment2"
-            app:destination="@id/favoritesFragment2" />
+            app:destination="@id/favoritesFragment2"
+            app:popUpTo="@id/mapFragment" />
         <action
             android:id="@+id/action_mapFragment_to_toiletsFragment"
-            app:destination="@id/toiletsFragment" />
+            app:destination="@id/toiletsFragment"
+            app:popUpTo="@id/mapFragment" />
         <action
             android:id="@+id/action_mapFragment_to_userFragment2"
-            app:destination="@id/userFragment2" />
+            app:destination="@id/userFragment2"
+            app:popUpTo="@id/mapFragment" />
         <action
             android:id="@+id/action_mapFragment_to_toiletTipsFragment"
-            app:destination="@id/toiletTipsFragment" />
+            app:destination="@id/toiletTipsFragment"
+            app:popUpTo="@id/mapFragment" />
+        <argument
+            android:name="isSignedIn"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/toiletFragment"
@@ -40,6 +50,19 @@
         <action
             android:id="@+id/action_toiletFragment_to_reviewsFragment"
             app:destination="@id/reviewsFragment" />
+        <argument
+            android:name="createToilet"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_toiletFragment_to_toiletsFragment"
+            app:destination="@id/toiletsFragment"
+            app:popUpTo="@id/mapFragment" />
+        <argument
+            android:name="toilet"
+            app:argType="com.francosoft.kampalacleantoilets.data.models.Toilet"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/toiletsFragment"
@@ -48,7 +71,8 @@
         tools:layout="@layout/toilets_fragment" >
         <action
             android:id="@+id/action_toiletsFragment_to_toiletFragment"
-            app:destination="@id/toiletFragment" />
+            app:destination="@id/toiletFragment"
+            app:popUpTo="@id/toiletsFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
@@ -74,7 +98,12 @@
         android:id="@+id/userFragment2"
         android:name="com.francosoft.kampalacleantoilets.ui.user.UserFragment"
         android:label="Account Settings"
-        tools:layout="@layout/user_fragment" />
+        tools:layout="@layout/user_fragment" >
+        <action
+            android:id="@+id/action_userFragment2_to_mapFragment"
+            app:destination="@id/mapFragment"
+            app:popUpTo="@id/mapFragment" />
+    </fragment>
     <fragment
         android:id="@+id/toiletTipsFragment"
         android:name="com.francosoft.kampalacleantoilets.ui.tips.ToiletTipsFragment"

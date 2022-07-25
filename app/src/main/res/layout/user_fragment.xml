@@ -131,13 +131,13 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/account_update"
+                    android:id="@+id/btnSignOutAccount"
                     style="?android:textAppearanceSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_padding"
                     android:backgroundTint="@color/Official_i3c_color"
-                    android:text="Edit"
+                    android:text="SIGN OUT"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:textStyle="bold" />

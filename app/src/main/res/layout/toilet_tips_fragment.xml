@@ -1,319 +1,334 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context=".ui.tips.ToiletTipsFragment">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.tips.ToiletTipsFragment">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_toilet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/low_padding"
+        app:cardElevation="@dimen/low_padding"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_toilet"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/low_padding"
-            app:cardElevation="@dimen/low_padding"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="@dimen/low_padding"
+            android:layout_marginBottom="@dimen/low_padding"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/low_padding"
-                android:layout_marginBottom="@dimen/low_padding"
-                android:orientation="horizontal"
-                android:weightSum="100">
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/large_padding"
+                android:paddingEnd="@dimen/medium_padding">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Flash the Toilet"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/medium_padding"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="80"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingStart="@dimen/large_padding"
-                    android:paddingEnd="@dimen/medium_padding">
+                    android:orientation="horizontal">
 
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Flash the Toilet"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="@dimen/medium_padding"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="@dimen/medium_padding"
+                        android:src="@drawable/ic_baseline_touch_app_24"/>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/medium_padding"
-                            android:src="@drawable/ic_baseline_touch_app_24"/>
-
-                        <TextView
-                            android:id="@+id/tvReview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/low_padding"
-                            android:background="#17C0CA33"
-                            android:text="You should always flash after using the toilet"
-                            android:textSize="14sp"
-                            />
-                    </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/tvReview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/low_padding"
+                        android:background="#17C0CA33"
+                        android:text="You should always flash after using the toilet"
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
+
             </LinearLayout>
+        </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_toilet2"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_toilet2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/low_padding"
+        app:cardElevation="@dimen/low_padding"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_toilet">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/low_padding"
-            app:cardElevation="@dimen/low_padding"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_toilet">
+            android:layout_marginTop="@dimen/low_padding"
+            android:layout_marginBottom="@dimen/low_padding"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/low_padding"
-                android:layout_marginBottom="@dimen/low_padding"
-                android:orientation="horizontal"
-                android:weightSum="100">
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/large_padding"
+                android:paddingEnd="@dimen/medium_padding">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvName2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Wash Your Hands"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/medium_padding"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="80"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingStart="@dimen/large_padding"
-                    android:paddingEnd="@dimen/medium_padding">
+                    android:orientation="horizontal">
 
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvName2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Wash Your Hands"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="@dimen/medium_padding"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="@dimen/medium_padding"
+                        android:src="@drawable/ic_baseline_wash"/>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/medium_padding"
-                            android:src="@drawable/ic_baseline_wash"/>
-
-                        <TextView
-                            android:id="@+id/tvReview2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/low_padding"
-                            android:background="#17C0CA33"
-                            android:text="It is recommended to wash your hands after using the toilet"
-                            android:textSize="14sp"
-                            />
-                    </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/tvReview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/low_padding"
+                        android:background="#17C0CA33"
+                        android:text="It is recommended to wash your hands after using the toilet"
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
+
             </LinearLayout>
+        </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_toilet3"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_toilet3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/low_padding"
+        app:cardElevation="@dimen/low_padding"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_toilet2">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/low_padding"
-            app:cardElevation="@dimen/low_padding"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_toilet2">
+            android:layout_marginTop="@dimen/low_padding"
+            android:layout_marginBottom="@dimen/low_padding"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/low_padding"
-                android:layout_marginBottom="@dimen/low_padding"
-                android:orientation="horizontal"
-                android:weightSum="100">
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/large_padding"
+                android:paddingEnd="@dimen/medium_padding">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvName3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hand Sanitize"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/medium_padding"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="80"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingStart="@dimen/large_padding"
-                    android:paddingEnd="@dimen/medium_padding">
+                    android:orientation="horizontal">
 
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvName3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Hand Sanitize"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="@dimen/medium_padding"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="@dimen/medium_padding"
+                        android:src="@drawable/ic_baseline_clean_hands_24"/>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/medium_padding"
-                            android:src="@drawable/ic_baseline_clean_hands_24"/>
-
-                        <TextView
-                            android:id="@+id/tvReview3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/low_padding"
-                            android:background="#17C0CA33"
-                            android:text="It is recommended to sanitize your hands in order to kill any germs got after using the toilet"
-                            android:textSize="14sp"
-                            />
-                    </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/tvReview3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/low_padding"
+                        android:background="#17C0CA33"
+                        android:text="It is recommended to sanitize your hands in order to kill any germs got after using the toilet"
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
+
             </LinearLayout>
+        </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_toilet4"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_toilet4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/low_padding"
+        app:cardElevation="@dimen/low_padding"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_toilet3">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/low_padding"
-            app:cardElevation="@dimen/low_padding"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_toilet3">
+            android:layout_marginTop="@dimen/low_padding"
+            android:layout_marginBottom="@dimen/low_padding"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/low_padding"
-                android:layout_marginBottom="@dimen/low_padding"
-                android:orientation="horizontal"
-                android:weightSum="100">
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/large_padding"
+                android:paddingEnd="@dimen/medium_padding">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvName4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dry Your Hands"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/medium_padding"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="80"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingStart="@dimen/large_padding"
-                    android:paddingEnd="@dimen/medium_padding">
+                    android:orientation="horizontal">
 
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvName4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Dry Your Hands"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="@dimen/medium_padding"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="@dimen/medium_padding"
+                        android:src="@drawable/ic_baseline_dry_24"/>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/medium_padding"
-                            android:src="@drawable/ic_baseline_dry_24"/>
-
-                        <TextView
-                            android:id="@+id/tvReview4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/low_padding"
-                            android:background="#17C0CA33"
-                            android:text="If available you can use a hand drier to dry your hands after using the toilet"
-                            android:textSize="14sp"
-                            />
-                    </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/tvReview4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/low_padding"
+                        android:background="#17C0CA33"
+                        android:text="If available you can use a hand drier to dry your hands after using the toilet"
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
-            </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<androidx.recyclerview.widget.RecyclerView-->
+    <!--    android:id="@+id/listLocations"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--    app:layout_constraintStart_toStartOf="parent"-->
+    <!--    app:layout_constraintTop_toTopOf="parent"-->
+    <!--    tools:itemCount="6"-->
+    <!--    tools:listitem="@layout/toilet_tips_list_item" />-->
 
 
 </ScrollView>
+
+
+

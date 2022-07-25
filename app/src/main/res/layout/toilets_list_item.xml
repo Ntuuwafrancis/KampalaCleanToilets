@@ -37,12 +37,11 @@
 
 
                 <TextView
-                    android:id="@+id/tvName"
+                    android:id="@+id/tvTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Toilet Title"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,10 +71,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/tvStatus"
+                    android:id="@+id/tvOpenStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="Availability"
+                    tools:text="Open/Closed"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tvOpStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Operational Status"
                     android:textSize="18sp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,6 +101,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
+                        android:id="@+id/imgFavorite"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@color/transparent"

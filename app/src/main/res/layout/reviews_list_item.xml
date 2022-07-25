@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_toilet"
+        android:id="@+id/cv_toiletReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/low_padding"
@@ -37,7 +37,7 @@
 
 
                 <TextView
-                    android:id="@+id/tvName"
+                    android:id="@+id/tvUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="User Name"
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content">
 
                     <RatingBar
-                        android:id="@+id/ratingBar1"
+                        android:id="@+id/ratingBar"
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
