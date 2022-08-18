@@ -10,12 +10,15 @@ data class Toilet (
     var title: String? = null,
     var address: String? = null,
     var phone: String? = null,
-    var latLong: String? = null,
+    var latitude: Double? = null,
+    var longitude: Double? = null,
     var type: String? = null,
     var openTime: String? = null,
     var closeTime: String? = null,
     var status: String? = null,
     var charge: String? = null,
+    var extraInfo: String? = null,
     var rating: Int = 0,
+    var geofenceRadius: Float? = null,
     var id: String? = null
 ) : Parcelable

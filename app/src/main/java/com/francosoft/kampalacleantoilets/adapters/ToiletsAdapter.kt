@@ -53,13 +53,8 @@ class ToiletsAdapter(private val context: Context) :
                     binding.ratingBar1.numStars = toilet.rating
                     binding.tvType.text = toilet.type
                     binding.imgFavorite.setOnClickListener{
-                        addToFavorites()
                     }
                 }
-
-        private fun addToFavorites() {
-            TODO("Not yet implemented")
-        }
 
     }
     interface OnItemClickListener {

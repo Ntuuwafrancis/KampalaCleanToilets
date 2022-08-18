@@ -8,7 +8,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="toilet_title">Toilet Title</string>
     <string name="address">Address</string>
-    <string name="latitude">Latitude/Longitude</string>
+    <string name="latitude">Latitude</string>
     <string name="type">Type</string>
     <string name="opening_hours">Opening Hours</string>
     <string name="closing_hours">Closing Hours</string>
@@ -21,4 +21,9 @@
     <string name="add_button">add button</string>
     <string name="sign_in">SIGN IN</string>
     <string name="sign_out">SIGN OUT</string>
+    <string name="longitude">Longitude</string>
+    <string name="extra_info">Other useful Information</string>
+    <string name="delete">Request Delete</string>
+    <string name="latest_review">Latest Review</string>
+    <string name="rating_marker_text">Rating: </string>
 </resources>

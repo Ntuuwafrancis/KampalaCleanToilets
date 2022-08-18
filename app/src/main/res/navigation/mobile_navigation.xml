@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.francosoft.kampalacleantoilets.ui.map.MapFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.map.MapsFragment"
         android:label="Map View"
-        tools:layout="@layout/map_fragment" >
+        tools:layout="@layout/maps_fragment" >
         <action
             android:id="@+id/action_mapFragment_to_toiletFragment"
             app:destination="@id/toiletFragment"

@@ -19,8 +19,7 @@ import com.francosoft.kampalacleantoilets.databinding.ToiletFragmentBinding
 import com.francosoft.kampalacleantoilets.utilities.extensions.enableOrDisable
 import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class ToiletFragment : Fragment() {
 
@@ -32,11 +31,13 @@ class ToiletFragment : Fragment() {
     private lateinit var etAddress: EditText
     private lateinit var etPhone: EditText
     private lateinit var etLatitude: EditText
+    private lateinit var etLongitude: EditText
     private lateinit var etType: EditText
     private lateinit var etOpeningHours: EditText
     private lateinit var etClosingHours: EditText
     private lateinit var etOperationalStatus: EditText
     private lateinit var etCharge: EditText
+    private lateinit var etExtraInfo: EditText
 
     private lateinit var databaseRef: DatabaseReference
     private lateinit var firebaseDb: FirebaseDatabase
@@ -72,11 +73,13 @@ class ToiletFragment : Fragment() {
             this@ToiletFragment.etAddress = address
             this@ToiletFragment.etPhone = phone
             this@ToiletFragment.etLatitude = latitude
+            this@ToiletFragment.etLongitude = longitude
             this@ToiletFragment.etType = type
             this@ToiletFragment.etOpeningHours = openingHours
             this@ToiletFragment.etClosingHours = closingHours
             this@ToiletFragment.etOperationalStatus = status
             this@ToiletFragment.etCharge = charge
+            this@ToiletFragment.etExtraInfo = extraInfo
             this@ToiletFragment.btnEdit = btnEditToilet
             this@ToiletFragment.btnDelete = btnDeleteToilet
         }
@@ -101,12 +104,32 @@ class ToiletFragment : Fragment() {
             changeFields(getString(R.string.save))
         } else {
             toilet?.let { populateToiletDetails(it) }
-
         }
 
         onClickSaveButton()
         onClickDeleteButton()
     }
+
+//    private fun getEditToilet(toiletId: String){
+//        val dbListener = databaseRef.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for (postSnapshot: DataSnapshot in snapshot.children) {
+//                    val editToilet = postSnapshot.getValue(Toilet::class.java) as Toilet
+//
+//                    if (toiletId == editToilet.id) {
+//                        toilet = editToilet
+//                        toilet?.let { populateToiletDetails(it) }
+//
+//                    }
+//
+//                }
+//
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//            }
+//        })
+//
+//    }
 
     private fun saveNewToilet() {
         if (auth.currentUser != null) {
@@ -185,12 +208,14 @@ class ToiletFragment : Fragment() {
         etToiletTitle.setText(toilet.title)
         etAddress.setText(toilet.address)
         etPhone.setText(toilet.phone)
-        etLatitude.setText(toilet.latLong)
+        etLatitude.setText(toilet.latitude.toString())
+        etLongitude.setText(toilet.longitude.toString())
         etOperationalStatus.setText(toilet.status)
         etOpeningHours.setText(toilet.openTime)
         etClosingHours.setText(toilet.closeTime)
         etType.setText(toilet.type)
         etCharge.setText(toilet.charge)
+        etExtraInfo.setText(toilet.extraInfo)
     }
 
     private fun captureEditTextFields(): Toilet {
@@ -201,19 +226,23 @@ class ToiletFragment : Fragment() {
         val openingHours = etOpeningHours.text.toString()
         val closingHours = etClosingHours.text.toString()
         val charge = etCharge.text.toString()
-        val latLong = etLatitude.text.toString()
+        val latitude = etLatitude.text.toString().toDouble()
+        val longitude = etLongitude.text.toString().toDouble()
         val phone = etPhone.text.toString()
+        val extraInfo = etExtraInfo.text.toString()
 
         return Toilet(
             title,
             address,
             phone,
-            latLong,
+            latitude,
+            longitude,
             type,
             openingHours,
             closingHours,
             status,
-            charge
+            charge,
+            extraInfo
         )
     }
 
@@ -223,9 +252,11 @@ class ToiletFragment : Fragment() {
         enableOrDisable(etPhone)
         enableOrDisable(etType)
         enableOrDisable(etLatitude)
+        enableOrDisable(etLongitude)
         enableOrDisable(etOpeningHours)
         enableOrDisable(etClosingHours)
         enableOrDisable(etOperationalStatus)
         enableOrDisable(etCharge)
+        enableOrDisable(etExtraInfo)
     }
 }

@@ -1,13 +1,12 @@
 package com.francosoft.kampalacleantoilets.ui.toilets
 
-import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +16,7 @@ import com.francosoft.kampalacleantoilets.adapters.ToiletsAdapter
 import com.francosoft.kampalacleantoilets.data.models.Toilet
 import com.francosoft.kampalacleantoilets.databinding.ToiletsFragmentBinding
 import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
-import org.w3c.dom.Text
 
 class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
 
@@ -70,7 +67,7 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
         toiletsAdapter.setOnItemClickListener(this@ToiletsFragment)
 
         binding.fabAddToilet.setOnClickListener {
-            val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment(true)
+            val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment(true, null)
             navController.navigate(action)
         }
 
