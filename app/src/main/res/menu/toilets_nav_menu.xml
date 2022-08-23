@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/toiletsFragment"
+        android:icon="@drawable/ic_baseline_view_list_24"
+        android:title="Toilets"  />
+<!--    <item-->
+<!--        android:id="@+id/newToiletsFragment"-->
+<!--        android:icon="@drawable/ic_baseline_fiber_new_24"-->
+<!--        android:title="NewToilets" />-->
+    <item
+        android:id="@+id/newToiletsFragment"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="EditedToilets" />
+
+</menu>

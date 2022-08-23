@@ -41,7 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="User Name"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -56,7 +55,6 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/rating"
                         android:numStars="5"
-                        android:rating="4"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

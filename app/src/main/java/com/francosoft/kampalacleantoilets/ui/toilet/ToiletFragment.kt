@@ -1,8 +1,6 @@
 package com.francosoft.kampalacleantoilets.ui.toilet
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -19,7 +19,9 @@ import com.francosoft.kampalacleantoilets.databinding.ToiletFragmentBinding
 import com.francosoft.kampalacleantoilets.utilities.extensions.enableOrDisable
 import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ToiletFragment : Fragment() {
 
@@ -38,7 +40,7 @@ class ToiletFragment : Fragment() {
     private lateinit var etOperationalStatus: EditText
     private lateinit var etCharge: EditText
     private lateinit var etExtraInfo: EditText
-
+    private lateinit var dbListener: ValueEventListener
     private lateinit var databaseRef: DatabaseReference
     private lateinit var firebaseDb: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -46,9 +48,11 @@ class ToiletFragment : Fragment() {
     private var newToilet: Boolean = false
     private lateinit var navController: NavController
     private var toilet: Toilet? = null
+    private var purpose: String? = null
+    private var isAdmin = false
 
     companion object {
-        fun newInstance() = ToiletFragment()
+//        fun newInstance() = ToiletFragment()
     }
 
     private lateinit var viewModel: ToiletViewModel
@@ -84,102 +88,136 @@ class ToiletFragment : Fragment() {
             this@ToiletFragment.btnDelete = btnDeleteToilet
         }
 
-        binding.allReview.setOnClickListener {
-            navController.navigate(R.id.reviewsFragment)
-        }
-
-        binding.addReview.setOnClickListener {
-            navController.navigate(R.id.reviewFragment)
-        }
+        initializeSetup()
 
         FirebaseUtil.openFbReference("toilet", requireActivity())
         firebaseDb = FirebaseUtil.firebaseDatabase
         databaseRef = FirebaseUtil.databaseReference
         auth = FirebaseUtil.firebaseAuth
 
-        newToilet = args.createToilet
-        toilet = args.toilet
+//        isUserAdmin(requireActivity())
 
-        if (newToilet){
-            changeFields(getString(R.string.save))
-        } else {
-            toilet?.let { populateToiletDetails(it) }
+        binding.allReview.setOnClickListener {
+            val action = ToiletFragmentDirections.actionToiletFragmentToReviewsFragment(toilet)
+            navController.navigate(action)
+        }
+
+        binding.addReview.setOnClickListener {
+            val action = ToiletFragmentDirections.actionToiletFragmentToReviewFragment(
+                toilet,
+                auth.currentUser?.email,
+                auth.currentUser?.displayName
+            )
+            navController.navigate(action)
         }
 
         onClickSaveButton()
         onClickDeleteButton()
     }
 
-//    private fun getEditToilet(toiletId: String){
-//        val dbListener = databaseRef.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for (postSnapshot: DataSnapshot in snapshot.children) {
-//                    val editToilet = postSnapshot.getValue(Toilet::class.java) as Toilet
-//
-//                    if (toiletId == editToilet.id) {
-//                        toilet = editToilet
-//                        toilet?.let { populateToiletDetails(it) }
-//
-//                    }
-//
-//                }
-//
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//            }
-//        })
-//
-//    }
+    private fun initializeSetup(){
+        isAdmin = args.isAdmin
+        toilet = args.toilet
+        purpose = args.approveToilet
 
-    private fun saveNewToilet() {
-        if (auth.currentUser != null) {
-            val toilet = captureEditTextFields()
-            toilet.rating = 3
-
-            val toiletId = databaseRef.push().key
-            if (!toiletId.isNullOrEmpty()){
-                toilet.id = toiletId
-                databaseRef.child(toiletId).setValue(toilet)
-            }
-
-            val action = ToiletFragmentDirections.actionToiletFragmentToToiletsFragment()
-            navController.navigate(action)
-            Toast.makeText(activity, "New Toilet Added",Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+        if (purpose.equals("approve")){
+            binding.allReview.visibility = View.INVISIBLE
+            binding.addReview.visibility = View.INVISIBLE
+            changeFields("Approve", "Reject")
+            toilet?.let { populateToiletDetails(it) }
+        } else if (purpose.equals("edit")) {
+            binding.allReview.visibility = View.VISIBLE
+            binding.addReview.visibility = View.VISIBLE
+            toilet?.let { populateToiletDetails(it) }
+        } else if (purpose.equals("new")){
+            binding.allReview.visibility = View.INVISIBLE
+            binding.addReview.visibility = View.INVISIBLE
+            changeFields(getString(R.string.save), getString(R.string.cancel))
+            toilet?.let { populateToiletDetails(it) }
         }
-
-    }
-
-    private fun editToilet() {
-        if (auth.currentUser != null) {
-            changeFields(getString(R.string.suggest_edit))
-            val toilet = captureEditTextFields()
-            toilet.id = this.toilet?.id
-            toilet.rating = this.toilet?.rating!!
-            toilet.id?.let { databaseRef.child(it).setValue(toilet) }
-            editing = false
-            Toast.makeText(activity, "Toilet Edited",Toast.LENGTH_SHORT).show()
-
-        } else {
-            Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
-
-        }
-
     }
 
     private fun onClickDeleteButton() {
         btnDelete.setOnClickListener {
-            if (auth.currentUser != null) {
-                toilet?.id?.let { it1 -> databaseRef.child(it1).removeValue() }
+            if (purpose.equals("edit")) {
+                if (auth.currentUser != null) {
+                    if (!editing) {
+                        editing = true
+                        toilet?.approved = "delete"
+                        toilet?.id?.let { databaseRef.child(it).setValue(toilet) }
+//                    toilet?.id?.let { it1 -> databaseRef.child(it1).removeValue() }
 
-                val action = ToiletFragmentDirections.actionToiletFragmentToToiletsFragment()
-                navController.navigate(action)
-                Toast.makeText(activity, "Toilet Deleted",Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                        navController.navigate(R.id.newToiletsFragment)
+//                        val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                        navController.navigate(action)
+                        Toast.makeText(activity, "Toilet Delete Requested",Toast.LENGTH_SHORT).show()
+                    } else {
+                        editing = false
+                        Toast.makeText(activity, "Toilet Edit Cancelled",Toast.LENGTH_SHORT).show()
+                        changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
+                    }
+
+                } else {
+                    Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                }
+            } else if(purpose.equals("approve")) {
+                if (toilet != null){
+                    when(toilet?.approved){
+                        "delete" ->{
+                            if (auth.currentUser != null) {
+
+                                if (isAdmin) {
+                                    toilet?.approved = "approved"
+                                    toilet?.id?.let { databaseRef.child(it).setValue(toilet) }
+                                    Toast.makeText(activity, "Toilet Delete Rejected",Toast.LENGTH_SHORT).show()
+
+                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+                                    navController.navigate(action)
+                                } else {
+                                    Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        "edit" ->{
+                            if (auth.currentUser != null) {
+
+                                if (isAdmin) {
+                                    toilet?.approved = "approved"
+                                    toilet?.id?.let { databaseRef.child(it).setValue(toilet) }
+                                    Toast.makeText(activity, "Toilet Edit Rejected",Toast.LENGTH_SHORT).show()
+
+                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+                                    navController.navigate(action)
+                                } else {
+                                    Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
+                                }
+
+                            } else {
+                                Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        "new" -> {
+                            if (auth.currentUser != null) {
+
+                                if (isAdmin) {
+                                    toilet?.id?.let { it1 -> databaseRef.child(it1).removeValue() }
+                                    Toast.makeText(activity, "New Toilet Rejected",Toast.LENGTH_SHORT).show()
+
+                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+                                    navController.navigate(action)
+                                } else {
+                                    Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
+                                }
+
+                            } else {
+                                Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
             }
-
         }
 
     }
@@ -187,21 +225,129 @@ class ToiletFragment : Fragment() {
     private fun onClickSaveButton() {
 
         btnEdit.setOnClickListener {
-            if (!editing && !newToilet) {
-                changeFields(getString(R.string.save))
-                editing = true
-            } else if (newToilet) {
-                saveNewToilet()
-            } else {
-                editToilet()
+
+            if (purpose.equals("approve")){
+                if (toilet != null){
+                    when(toilet?.approved){
+                        "delete" ->{
+                            if (auth.currentUser != null) {
+
+                                if (isAdmin) {
+                                    toilet?.id?.let { it1 -> databaseRef.child(it1).removeValue() }
+//                                changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
+//                                purpose = "edit"
+
+                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+                                    navController.navigate(action)
+                                    Toast.makeText(activity, "Toilet Removed",Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
+                                }
+
+                            } else {
+                                Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        "edit" ->{
+                            if (auth.currentUser != null) {
+                                if (isAdmin) {
+                                    val toilet2 = captureEditTextFields()
+                                    toilet2.id = toilet?.id
+                                    toilet2.rating = toilet?.rating!!
+                                    toilet2.approved = "approved"
+                                    databaseRef.child(toilet2.id!!).setValue(toilet2)
+                                    changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
+                                    purpose = "edit"
+
+//                                val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                                navController.navigate(action)
+                                    Toast.makeText(activity, "Toilet Edit Approved",Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
+                                }
+
+                            } else {
+                                Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        "new" -> {
+                            if (auth.currentUser != null) {
+
+                                if (isAdmin) {
+                                    val toilet2 = captureEditTextFields()
+                                    toilet2.id = toilet?.id
+                                    toilet2.rating = toilet?.rating!!
+                                    toilet2.approved = "approved"
+                                    databaseRef.child(toilet2.id!!).setValue(toilet2)
+                                    changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
+                                    purpose = "edit"
+
+//                                val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                                navController.navigate(action)
+                                    Toast.makeText(activity, "Toilet Approved",Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
+                                }
+
+
+                            } else {
+                                Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+            } else if (purpose.equals("edit")) {
+
+                if (auth.currentUser != null) {
+                    if (editing) {
+                        val toilet2 = captureEditTextFields()
+                        toilet2.id = toilet?.id
+                        toilet2.rating = toilet?.rating!!
+                        toilet2.approved = "edit"
+                        databaseRef.child(toilet2.id!!).setValue(toilet2)
+                        editing = false
+
+                        Toast.makeText(activity, "Toilet Edit Requested",Toast.LENGTH_SHORT).show()
+                        changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
+                    } else {
+                        editing = true
+                        changeFields(getString(R.string.save), getString(R.string.cancel))
+                    }
+
+//                editToilet()
+                }else {
+                    Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+                }
+
+            } else if (purpose.equals("new")){
+                if (auth.currentUser != null) {
+                    val toilet = captureEditTextFields()
+                    val toiletId = databaseRef.push().key
+                    if (!toiletId.isNullOrEmpty()) {
+                        toilet.id = toiletId
+                        toilet.approved = "new"
+                        databaseRef.child(toiletId).setValue(toilet)
+
+                        val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+                        navController.navigate(action)
+                        Toast.makeText(activity, "New Toilet Requested", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                } else {
+                    Toast.makeText(activity, "Access Denied! Please Login To Make Changes",Toast.LENGTH_SHORT).show()
+
+                }
             }
         }
     }
 
-    private fun changeFields(btnEditTxt: String) {
+    private fun changeFields(btnEditTxt: String, btnDeleteTxt: String) {
         enableOrDisableEditText()
         binding.toiletDetailContainer.fullScroll(ScrollView.FOCUS_UP)
         binding.btnEditToilet.text = btnEditTxt
+        binding.btnDeleteToilet.text = btnDeleteTxt
     }
 
     private fun populateToiletDetails(toilet: Toilet) {
@@ -259,4 +405,49 @@ class ToiletFragment : Fragment() {
         enableOrDisable(etCharge)
         enableOrDisable(etExtraInfo)
     }
+
+//    private fun isUserAdmin(context: Context){
+//
+//        dbListener = firebaseDb.getReference("user").addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//
+//                for (postSnapshot: DataSnapshot in snapshot.children) {
+//                    val user = postSnapshot.getValue(User::class.java) as User
+//
+////                    user.id = postSnapshot.key
+////                    users.add(userId)
+//                    if (user.role.equals("admin")){
+//                        isAdmin = true
+//                    }
+//                }
+//
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+//            }
+//
+//        })
+//    }
+
+    //    private fun getEditToilet(toiletId: String){
+//        val dbListener = databaseRef.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for (postSnapshot: DataSnapshot in snapshot.children) {
+//                    val editToilet = postSnapshot.getValue(Toilet::class.java) as Toilet
+//
+//                    if (toiletId == editToilet.id) {
+//                        toilet = editToilet
+//                        toilet?.let { populateToiletDetails(it) }
+//
+//                    }
+//
+//                }
+//
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//            }
+//        })
+//
+//    }
 }

@@ -1,15 +1,26 @@
 package com.francosoft.kampalacleantoilets.ui.reviews
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.francosoft.kampalacleantoilets.R
+import com.francosoft.kampalacleantoilets.adapters.ReviewsAdapter
+import com.francosoft.kampalacleantoilets.data.models.Review
+import com.francosoft.kampalacleantoilets.data.models.Toilet
 import com.francosoft.kampalacleantoilets.databinding.ReviewsFragmentBinding
-import com.francosoft.kampalacleantoilets.databinding.ToiletsFragmentBinding
+import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class ReviewsFragment : Fragment(){
 
@@ -19,7 +30,20 @@ class ReviewsFragment : Fragment(){
         fun newInstance() = ReviewsFragment()
     }
 
+    private lateinit var dbListener: ValueEventListener
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var reviewsAdapter: ReviewsAdapter
+    private var reviews: MutableList<Review> = mutableListOf()
     private lateinit var viewModel: ReviewsViewModel
+    private lateinit var navController: NavController
+    private lateinit var databaseRef: DatabaseReference
+    private lateinit var firebaseDb: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+    private val args: ReviewsFragmentArgs by navArgs()
+    private var toilet: Toilet? = null
+    private var toiletRating: Double? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,27 +57,54 @@ class ReviewsFragment : Fragment(){
         viewModel = ViewModelProvider(this).get(ReviewsViewModel::class.java)
 
         binding = ReviewsFragmentBinding.bind(view)
-        val navController = Navigation.findNavController(view)
+        navController = Navigation.findNavController(view)
 
-//        binding.cvToilet.setOnClickListener {
-//            navController.navigate(R.id.reviewFragment)
-//        }
-//
-//        binding.cvToilet2.setOnClickListener {
-//            navController.navigate(R.id.reviewFragment)
-//        }
-//
-//        binding.cvToilet3.setOnClickListener {
-//            navController.navigate(R.id.reviewFragment)
-//        }
-//
-//        binding.cvToilet4.setOnClickListener {
-//            navController.navigate(R.id.reviewFragment)
-//        }
-//
-//        binding.cvToilet5.setOnClickListener {
-//            navController.navigate(R.id.reviewFragment)
-//        }
+        binding.apply {
+            this@ReviewsFragment.recyclerView = rvReviews
+        }
+
+        FirebaseUtil.openFbReference("review", requireActivity())
+        firebaseDb = FirebaseUtil.firebaseDatabase
+        databaseRef = FirebaseUtil.databaseReference
+        auth = FirebaseUtil.firebaseAuth
+
+        toilet = args.toilet
+
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        reviewsAdapter = ReviewsAdapter(requireContext())
+        recyclerView.adapter = reviewsAdapter
+        getReviews()
+    }
+
+
+
+    private fun getReviews() {
+        dbListener = databaseRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                reviews.clear()
+
+                for (postSnapshot: DataSnapshot in snapshot.children) {
+                    val review = postSnapshot.getValue(Review::class.java) as Review
+                    review.id = postSnapshot.key
+
+                    if (review.toiletId == args.toilet?.id){
+                        toiletRating =+ review.rating
+                        reviews.add(review)
+                        reviewsAdapter.notifyItemInserted(reviews.size - 1)
+                    }
+                }
+
+                reviewsAdapter.submitList(reviews)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
     }
 

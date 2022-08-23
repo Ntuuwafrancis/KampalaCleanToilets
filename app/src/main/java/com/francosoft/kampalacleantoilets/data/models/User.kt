@@ -1,8 +1,12 @@
 package com.francosoft.kampalacleantoilets.data.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class User(
-    val id:Int,
-    val username: String,
-    val email: String,
-    val privileges: String
-)
+    var username: String? = null,
+    var email: String?= null,
+    var role: String?= null,
+    var uid: String? = null
+) : Parcelable

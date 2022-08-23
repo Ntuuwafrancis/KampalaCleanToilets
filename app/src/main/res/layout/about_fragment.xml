@@ -63,27 +63,38 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/low_padding"
                     android:background="#17C0CA33"
-                    android:text="Android Studio Bumblebee | 2021.1.1 Patch 3
-Build #AI-211.7628.21.2111.8309675, built on March 16, 2022
-Runtime version: 11.0.11+9-b60-7590822 amd64
-VM: OpenJDK 64-Bit Server VM by Oracle Corporation
-Windows 10 10.0
-GC: G1 Young Generation, G1 Old Generation
-Memory: 1280M
-Cores: 4
-Registry: external.system.auto.import.disabled=true, ide.instant.shutdown=false
+                    android:text="Kampala Clean Toilets (KCT app) is a public service mobile app that enables users to locate both public
+and private nearby toilets in Kampala using Google Maps. KCT app also enables users to add new and available toilets in kampala using Google Maps.
+"
+                    android:textSize="14sp"
+                    />
 
-Non-Bundled Plugins: com.robohorse.robopojogenerator (2.3.5)
-Android Studio Bumblebee | 2021.1.1 Patch 3
-Build #AI-211.7628.21.2111.8309675, built on March 16, 2022
-Runtime version: 11.0.11+9-b60-7590822 amd64
+                <TextView
+                    android:id="@+id/tvReview2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/low_padding"
+                    android:background="#17C0CA33"
+                    android:text="KCT Android | 2022.22.08 Version 1.0.0
+Build #AI-1.0.0, built on August 22, 2022
+Runtime version: 1.0.0.1
 VM: OpenJDK 64-Bit Server VM by Oracle Corporation
-Windows 10 10.0
-GC: G1 Young Generation, G1 Old Generation
-Memory: 1280M
-Cores: 4
-Registry: external.system.auto.import.disabled=true, ide.instant.shutdown=false
-Non-Bundled Plugins: com.robohorse.robopojogenerator (2.3.5)"
+Minimum Android verion - Android 5 (Lollipop)
+Target Android verion - Android 12 (S)
+Size: 15 MB
+Registry: Google Maps Android =true,
+Permissions: GPS Location, Internet "
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvReview3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/low_padding"
+                    android:background="#17C0CA33"
+                    android:text="Credits for this app go to Aidah Nabukenya and
+James Kitaka"
                     android:textSize="14sp"
                     />
 

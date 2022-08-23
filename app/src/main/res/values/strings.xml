@@ -23,7 +23,21 @@
     <string name="sign_out">SIGN OUT</string>
     <string name="longitude">Longitude</string>
     <string name="extra_info">Other useful Information</string>
-    <string name="delete">Request Delete</string>
-    <string name="latest_review">Latest Review</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="latest_review">Latest Reviews</string>
     <string name="rating_marker_text">Rating: </string>
+    <string name="today_s_date">Today\'s Date</string>
+    <string name="username">Username</string>
+    <string name="write_your_review">Write Your Review</string>
+    <string name="save_review">Save Review</string>
+    <string name="distance">Distance</string>
+    <string name="distance_value">%1$.2f miles</string>
+    <string name="snackbar_add_toilet">Long click on a spot on the map to add new toilet</string>
+
+    <string name="map_rationale">We need access to your location to show you toilets near your current location. This data is not stored or shared.</string>
+    <string name="location_rationale">We need access to your location to show your location relative to toilets near you. This data is not stored or shared.</string>
+    <string name="snackbar_map">Show your location on the map?</string>
+    <string name="snackbar_toilets">Show distance to toilets?</string>
+    <string name="ok">OK</string>
 </resources>

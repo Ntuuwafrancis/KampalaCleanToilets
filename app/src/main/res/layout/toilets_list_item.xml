@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Toilet Title"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         tools:text="Type"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -63,8 +63,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="right"
+                        android:visibility="invisible"
                         tools:text="Distance Away: 0km"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -75,13 +76,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Open/Closed"
-                    android:textSize="18sp" />
-                <TextView
-                    android:id="@+id/tvOpStatus"
+                    android:textSize="14sp" />
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Operational Status"
-                    android:textSize="18sp" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvOpStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="Operational Status"
+                        android:gravity="left"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"  />
+
+
+                    <TextView
+                        android:id="@+id/tvApproved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        tools:text="Distance Away: 0km"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -89,26 +110,27 @@
 
                     <RatingBar
                         android:id="@+id/ratingBar1"
-                        style="@android:style/Widget.Material.RatingBar.Indicator"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:contentDescription="@string/rating"
                         android:numStars="5"
-                        android:rating="4"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
                         android:id="@+id/imgFavorite"
+                        android:visibility="invisible"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@color/transparent"
                         android:src="@drawable/ic_baseline_favorite_grey"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="SpeakableTextPresentCheck" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

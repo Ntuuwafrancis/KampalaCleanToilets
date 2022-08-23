@@ -1,46 +1,66 @@
 package com.francosoft.kampalacleantoilets.ui.map
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.francosoft.kampalacleantoilets.R
 import com.francosoft.kampalacleantoilets.data.models.Toilet
+import com.francosoft.kampalacleantoilets.databinding.ActivityMainBinding
+import com.francosoft.kampalacleantoilets.databinding.ToiletFragmentBinding
+import com.francosoft.kampalacleantoilets.databinding.ToiletsListItemBinding
+import com.francosoft.kampalacleantoilets.ui.toilets.ToiletsFragment
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import com.google.android.material.snackbar.Snackbar
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
+
 //import com.google.codelabs.buildyourfirstmap.place.Place
 
 class MarkerInfoWindowAdapter(
     private val context: Context
 ) : GoogleMap.InfoWindowAdapter {
 
+    private var binding: ToiletsListItemBinding
+    private var view: View
+
+    init {
+
+        val inflater = LayoutInflater.from(context)
+        binding = ToiletsListItemBinding.inflate(inflater)
+        view = binding.root
+    }
+
     override fun getInfoContents(marker: Marker): View? {
+
         // 1. Get tag
         val toilet = marker.tag as? Toilet ?: return null
 
         // 2. Inflate view and set title, address, and rating
-        val view = LayoutInflater.from(context).inflate(
-            R.layout.marker_info_contents, null
-        )
-        view.findViewById<TextView>(
-            R.id.text_view_title
-        ).text = toilet.title
-        view.findViewById<TextView>(
-            R.id.text_view_address
-        ).text = toilet.address
-        view.findViewById<TextView>(
-            R.id.text_view_rating
-        ).text = buildString {
-        append(context.getString(R.string.rating_marker_text))
-        append(toilet.rating)
-    }
+        binding.tvTitle.text = toilet.title
+        ("Open: " + toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
+        binding.tvOpStatus.text = toilet.status
+        binding.ratingBar1.rating = toilet.rating.toFloat()
+        binding.tvType.text = toilet.type
 
         return view
     }
 
-    override fun getInfoWindow(p0: Marker): View? {
-        // Return null to indicate that the
-        // default window (white bubble) should be used
-        return null
+    override fun getInfoWindow(marker: Marker): View? {
+        // 1. Get tag
+        val toilet = marker.tag as? Toilet ?: return null
+
+        binding.tvTitle.text = toilet.title
+        ("Open: " + toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
+        binding.tvOpStatus.text = toilet.status
+        binding.ratingBar1.rating = toilet.rating.toFloat()
+        binding.tvType.text = toilet.type
+
+        return view
     }
+
 }

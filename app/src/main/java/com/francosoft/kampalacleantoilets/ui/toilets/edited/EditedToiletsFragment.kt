@@ -1,4 +1,4 @@
-package com.francosoft.kampalacleantoilets.ui.tips
+package com.francosoft.kampalacleantoilets.ui.toilets.edited
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,23 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import com.francosoft.kampalacleantoilets.R
 
-class ToiletTipsFragment : Fragment() {
+class EditedToiletsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ToiletTipsFragment()
+        fun newInstance() = EditedToiletsFragment()
     }
 
-    private lateinit var viewModel: ToiletTipsViewModel
+    private lateinit var viewModel: EditedToiletsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.toilet_tips_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_edited_toilets, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ToiletTipsViewModel::class.java)
+        viewModel = ViewModelProvider(this)[EditedToiletsViewModel::class.java]
     }
 }

@@ -1,13 +1,12 @@
-package com.francosoft.kampalacleantoilets.ui.toilets.favorites
+package com.francosoft.kampalacleantoilets.ui.toilets.newtolilets
 
-import android.graphics.Canvas
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,67 +16,80 @@ import com.francosoft.kampalacleantoilets.R
 import com.francosoft.kampalacleantoilets.adapters.ToiletsAdapter
 import com.francosoft.kampalacleantoilets.data.models.Toilet
 import com.francosoft.kampalacleantoilets.data.models.User
-import com.francosoft.kampalacleantoilets.databinding.FavoritesFragmentBinding
 import com.francosoft.kampalacleantoilets.databinding.FragmentNewToiletsBinding
-import com.francosoft.kampalacleantoilets.databinding.ToiletsFragmentBinding
-import com.francosoft.kampalacleantoilets.ui.toilets.ToiletsFragmentDirections
-import com.francosoft.kampalacleantoilets.ui.toilets.newtolilets.NewToiletsFragmentDirections
 import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class FavoritesFragment : Fragment(), ToiletsAdapter.OnItemClickListener{
-    private lateinit var binding: FavoritesFragmentBinding
-    lateinit var navController: NavController
+class NewToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
+    private lateinit var binding: FragmentNewToiletsBinding
+    private lateinit var navController: NavController
     private lateinit var databaseRef: DatabaseReference
     private lateinit var firebaseDb: FirebaseDatabase
     private lateinit var dbListener: ValueEventListener
-    //    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+//    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var auth: FirebaseAuth
     private lateinit var recyclerView: RecyclerView
     private lateinit var toiletsAdapter: ToiletsAdapter
     private var toilets: MutableList<Toilet> = mutableListOf()
     private lateinit var itemTouchHelper: ItemTouchHelper
+    private var admin: Boolean = false
 
     companion object {
-        fun newInstance() = FavoritesFragment()
+        fun newInstance() = NewToiletsFragment()
     }
 
-    private lateinit var viewModel: FavoritesViewModel
+    private lateinit var viewModel: NewToiletsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.favorites_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_new_toilets, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FavoritesViewModel::class.java)
+        viewModel = ViewModelProvider(this)[NewToiletsViewModel::class.java]
 
-        binding = FavoritesFragmentBinding.bind(view)
+        binding = FragmentNewToiletsBinding.bind(view)
         navController = Navigation.findNavController(view)
 
         binding.apply {
-            this@FavoritesFragment.recyclerView = listLocations
-//            this@FavoritesFragment.swipeRefreshLayout = swipeLayout
+            this@NewToiletsFragment.recyclerView = rvToilets
         }
 
-        FirebaseUtil.openFbReference("user", requireActivity())
+        FirebaseUtil.openFbReference("toilet", requireActivity())
         firebaseDb = FirebaseUtil.firebaseDatabase
         databaseRef = FirebaseUtil.databaseReference
         auth = FirebaseUtil.firebaseAuth
 
+       isUserAdmin()
+
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        toiletsAdapter = ToiletsAdapter(requireContext())
+        recyclerView.adapter = toiletsAdapter
+        toiletsAdapter.setOnItemClickListener(this)
+
+        binding.fabAddToilet.setOnClickListener {
+//            val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment(true, null)
+            val action = NewToiletsFragmentDirections.actionNewToiletsFragmentToMapFragment(true)
+            navController.navigate(action)
+
+        }
+
         setUpDbListener()
+//        pullToRefresh()
 
     }
 
     private fun setUpDbListener() {
 
-        if (auth.currentUser?.uid != null) {
-            val userId = auth.currentUser?.uid
-            dbListener = firebaseDb.getReference("user/$userId/favorite").addValueEventListener(object : ValueEventListener{
+        if (auth.currentUser != null) {
+
+            dbListener = databaseRef.addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     toilets.clear()
 
@@ -85,13 +97,20 @@ class FavoritesFragment : Fragment(), ToiletsAdapter.OnItemClickListener{
                         val toilet = postSnapshot.getValue(Toilet::class.java) as Toilet
                         toilet.id = postSnapshot.key
 //                    toilet.id?.let { databaseRef.child(it).setValue(toilet) }
-                        if(toilet.approved.equals("approved") ){
+                        if(toilet.approved.equals("new") || toilet.approved.equals("delete") || toilet.approved.equals("edit")){
                             toilets.add(toilet)
                             toiletsAdapter.notifyItemInserted(toilets.size - 1)
                         }
 
-//                    toilets.add(toilet)
-//                    toiletsAdapter.notifyItemInserted(toilets.size - 1)
+//                        if (isUserAdmin()){
+//                            toilets.add(toilet)
+//                            toiletsAdapter.notifyItemInserted(toilets.size - 1)
+//                        } else {
+//                            if (toilet.uid == auth.currentUser!!.uid){
+//                                toilets.add(toilet)
+//                                toiletsAdapter.notifyItemInserted(toilets.size - 1)
+//                            }
+//                        }
                     }
 
                 toiletsAdapter.submitList(toilets)
@@ -102,33 +121,21 @@ class FavoritesFragment : Fragment(), ToiletsAdapter.OnItemClickListener{
                 }
 
             })
-
         }
-           }
 
-//    private fun removeFav() {
-//        if (auth.currentUser != null) {
-//            val userId = auth.currentUser!!.uid
-////            toiletsAdapter.
-//
-////            Toast.makeText(activity, "Toilet Removed From Favorites", Toast.LENGTH_SHORT).show()
-//        } else {
-////            Toast.makeText(activity, "Access Denied! Please Login To Make Changes", Toast.LENGTH_SHORT).show()
+    }
+
+//    private fun pullToRefresh() {
+//        swipeRefreshLayout.setOnRefreshListener {
+//            swipeRefreshLayout.isRefreshing = false
+//            if (TrackingUtility.isLocationEnabled(requireContext())) {
+//                toiletsAdapter.submitList(toiletsAdapter.currentList)
+//                toiletsAdapter.notifyDataSetChanged()
+//            }
 //        }
 //    }
 
-//    private fun addFav() {
-//        if (auth.currentUser != null) {
-//            val userId = auth.currentUser!!.uid
-//
-//            Toast.makeText(activity, "Toilet added To Favorites", Toast.LENGTH_SHORT).show()
-//        } else {
-////            Toast.makeText(activity, "Access Denied! Please Login To Make Changes", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
-    private fun isUserAdmin() : Boolean{
-        var isAdmin = false
+    private fun isUserAdmin(){
         firebaseDb.getReference("user").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -137,9 +144,11 @@ class FavoritesFragment : Fragment(), ToiletsAdapter.OnItemClickListener{
 
 //                    user.id = postSnapshot.key
 //                    users.add(userId)
-                    if (user.role.equals("admin")){
-                        isAdmin = true
+                    if (user.uid == auth.currentUser?.uid) {
+                        if (user.role == "admin")
+                            admin = true
                     }
+
                 }
 
             }
@@ -149,11 +158,16 @@ class FavoritesFragment : Fragment(), ToiletsAdapter.OnItemClickListener{
             }
 
         })
-        return isAdmin
     }
 
     override fun onItemClick(toilet: Toilet) {
-        val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("",false, toilet)
+        val action = NewToiletsFragmentDirections.actionNewToiletsFragmentToToiletFragment("approve",admin , toilet)
         navController.navigate(action)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        toiletsAdapter.notifyDataSetChanged()
     }
 }

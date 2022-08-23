@@ -1,28 +1,32 @@
 package com.francosoft.kampalacleantoilets.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
-import com.firebase.ui.auth.*
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.francosoft.kampalacleantoilets.R
+import com.francosoft.kampalacleantoilets.data.models.User
 import com.francosoft.kampalacleantoilets.databinding.ActivityMainBinding
 import com.francosoft.kampalacleantoilets.databinding.NavHeaderBinding
+import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
+import com.francosoft.kampalacleantoilets.utilities.helpers.RateItDialogFragement
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 
 
@@ -36,6 +40,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navViewHeaderBinding : NavHeaderBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var fbListener: FirebaseAuth.AuthStateListener
+    private lateinit var databaseRef: DatabaseReference
+    private lateinit var firebaseDb: FirebaseDatabase
+    private lateinit var dbListener: ValueEventListener
+    private var users: MutableList<User> = mutableListOf()
+    private var isAdmin: Boolean = false
+    private var userExists: Boolean = false
+    lateinit var bottomNavigationView: BottomNavigationView
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -73,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.mapFragment, R.id.toiletsFragment, R.id.favoritesFragment2,R.id.userFragment2, R.id.rateApp, R.id.share , R.id.aboutFragment2
+                R.id.mapFragment, R.id.toiletsFragment, R.id.favoritesFragment2,R.id.userFragment2, R.id.rateAppFragment, R.id.aboutFragment2
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -81,8 +92,8 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.rateApp -> {}
-                R.id.share -> {}
+                R.id.rateAppFragment -> { RateItDialogFragement.show(supportFragmentManager, "Rate App")}
+//                R.id.share -> {}
                 else -> {
                     NavigationUI.onNavDestinationSelected(it, navController)
                     drawerLayout.closeDrawers()
@@ -90,13 +101,42 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        val contentMainBinding = binding.appBarMain.contentMain
+        bottomNavigationView = contentMainBinding.btAppbarToilets
+        bottomNavigationView.setupWithNavController(navController)
+        bottomNavigationView.setOnItemReselectedListener {
+            when(it.itemId) {
+                R.id.toiletsFragment -> {
+                    navController.navigate(R.id.toiletsFragment)
+                }
 
+                R.id.newToiletsFragment -> {
+                    navController.navigate(R.id.newToiletsFragment)
+                }
+
+                R.id.editedToiletsFragment -> {
+                    navController.navigate(R.id.editedToiletsFragment)
+                }
+            }
+        }
+        navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            if (nd.id == R.id.toiletsFragment || nd.id == R.id.newToiletsFragment || nd.id == R.id.editedToiletsFragment) {
+                bottomNavigationView.visibility = View.VISIBLE
+            } else {
+                bottomNavigationView.visibility = View.GONE
+            }
+        }
+
+        FirebaseUtil.openFbReference("user", this)
+        firebaseDb = FirebaseUtil.firebaseDatabase
+        databaseRef = FirebaseUtil.databaseReference
+//        auth = FirebaseUtil.firebaseAuth
         auth = Firebase.auth
+
         fbListener = FirebaseAuth.AuthStateListener {
             val providers = arrayListOf(
                 AuthUI.IdpConfig.GoogleBuilder().build()
             )
-
 
             if (auth.currentUser == null) {
                 // Create and launch sign-in intent
@@ -115,25 +155,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser == null){
-            auth.addAuthStateListener(fbListener)
-        } else {
-
-            imgBadge.visibility = View.VISIBLE
-            etEmail.text = currentUser.email
-            etUsername.text = currentUser.displayName
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        auth.removeAuthStateListener { fbListener }
-    }
-
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
@@ -146,6 +167,13 @@ class MainActivity : AppCompatActivity() {
                 imgBadge.visibility = View.VISIBLE
                 Toast.makeText(this, "Signed In Successfully!", Toast.LENGTH_LONG).show()
 
+//                val key = firebaseDb.getReference("user/"+ user.uid).push().key
+                val newUser = User(user.displayName,
+                    user.email, "normal", user.uid)
+
+                if (newUser.uid != null && !checkIfUserExists( user)) {
+                    firebaseDb.getReference("user/"+ user.uid).setValue(newUser)
+                }
             }
             // ...
         } else {
@@ -162,6 +190,71 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkIfUserExists( currentUser: FirebaseUser) : Boolean{
+        dbListener = databaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (postSnapshot: DataSnapshot in snapshot.children) {
+                    val user = postSnapshot.getValue(User::class.java) as User
+
+//                    user.id = postSnapshot.key
+//                    users.add(userId)
+                    if (currentUser.uid == user.uid) {
+                        userExists = true
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+        return userExists
+    }
+
+    private fun isUserAdmin() : Boolean{
+        dbListener = databaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (postSnapshot: DataSnapshot in snapshot.children) {
+                    val user = postSnapshot.getValue(User::class.java) as User
+
+//                    user.id = postSnapshot.key
+//                    users.add(userId)
+                    if (user.role.equals("admin")){
+                        isAdmin = true
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+        return isAdmin
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser == null){
+            auth.addAuthStateListener(fbListener)
+        } else {
+
+            imgBadge.visibility = View.VISIBLE
+            etEmail.text = currentUser.email
+            etUsername.text = currentUser.displayName
+            Toast.makeText(this, "Welcome Back ${etUsername.text}", Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         val user = auth.currentUser
@@ -170,7 +263,6 @@ class MainActivity : AppCompatActivity() {
             etUsername.text = user.displayName
             etEmail.text = user.email
             imgBadge.visibility = View.VISIBLE
-            Toast.makeText(this, "Welcome Back ${etUsername.text}", Toast.LENGTH_LONG).show()
         } else {
             etUsername.text = ""
             etEmail.text = ""
@@ -181,5 +273,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_container)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        auth.removeAuthStateListener (fbListener)
     }
 }

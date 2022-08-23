@@ -14,10 +14,10 @@
             android:icon="@drawable/ic_baseline_list"
             android:title="List View" />
 
-        <item
-            android:id="@+id/favoritesFragment2"
-            android:icon="@drawable/ic_baseline_favorite_border"
-            android:title="Favorites" />
+<!--        <item-->
+<!--            android:id="@+id/favoritesFragment2"-->
+<!--            android:icon="@drawable/ic_baseline_favorite_border"-->
+<!--            android:title="Favorites" />-->
 
         <item
             android:id="@+id/toiletTipsFragment"
@@ -32,12 +32,12 @@
                     android:icon="@drawable/ic_baseline_account_circle"
                     android:title="Account" />
 
+<!--                <item-->
+<!--                    android:id="@+id/share"-->
+<!--                    android:icon="@drawable/ic_baseline_share_24"-->
+<!--                    android:title="Share" />-->
                 <item
-                    android:id="@+id/share"
-                    android:icon="@drawable/ic_baseline_share_24"
-                    android:title="Share" />
-                <item
-                    android:id="@+id/rateApp"
+                    android:id="@+id/rateAppFragment"
                     android:icon="@drawable/ic_baseline_thumb_up"
                     android:title="Rate this app" />
 
