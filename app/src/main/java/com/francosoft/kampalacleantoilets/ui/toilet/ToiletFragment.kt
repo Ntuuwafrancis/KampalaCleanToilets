@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.francosoft.kampalacleantoilets.R
@@ -50,6 +51,7 @@ class ToiletFragment : Fragment() {
     private var toilet: Toilet? = null
     private var purpose: String? = null
     private var isAdmin = false
+    private lateinit var fragment: String
 
     companion object {
 //        fun newInstance() = ToiletFragment()
@@ -119,6 +121,7 @@ class ToiletFragment : Fragment() {
         isAdmin = args.isAdmin
         toilet = args.toilet
         purpose = args.approveToilet
+        fragment = args.fragment
 
         if (purpose.equals("approve")){
             binding.allReview.visibility = View.INVISIBLE
@@ -147,7 +150,22 @@ class ToiletFragment : Fragment() {
                         toilet?.id?.let { databaseRef.child(it).setValue(toilet) }
 //                    toilet?.id?.let { it1 -> databaseRef.child(it1).removeValue() }
 
-                        navController.navigate(R.id.newToiletsFragment)
+                        when(fragment){
+                            "map" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                            }
+                            "toilets" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                            }
+                            "newToilets" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                            }
+                        }
+
+//                        navController.navigate(R.id.newToiletsFragment)
 //                        val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
 //                        navController.navigate(action)
                         Toast.makeText(activity, "Toilet Delete Requested",Toast.LENGTH_SHORT).show()
@@ -171,8 +189,23 @@ class ToiletFragment : Fragment() {
                                     toilet?.id?.let { databaseRef.child(it).setValue(toilet) }
                                     Toast.makeText(activity, "Toilet Delete Rejected",Toast.LENGTH_SHORT).show()
 
-                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
-                                    navController.navigate(action)
+                                    when(fragment){
+                                        "map" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                                        }
+                                        "toilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                                        }
+                                        "newToilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                                        }
+                                    }
+//                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                                    val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+//                                    navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
                                 } else {
                                     Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
                                 }
@@ -188,8 +221,24 @@ class ToiletFragment : Fragment() {
                                     toilet?.id?.let { databaseRef.child(it).setValue(toilet) }
                                     Toast.makeText(activity, "Toilet Edit Rejected",Toast.LENGTH_SHORT).show()
 
-                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
-                                    navController.navigate(action)
+                                    when(fragment){
+                                        "map" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                                        }
+                                        "toilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                                        }
+                                        "newToilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                                        }
+                                    }
+//                                    val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+//                                    navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+//                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                                    navController.navigate(action)
                                 } else {
                                     Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
                                 }
@@ -205,8 +254,24 @@ class ToiletFragment : Fragment() {
                                     toilet?.id?.let { it1 -> databaseRef.child(it1).removeValue() }
                                     Toast.makeText(activity, "New Toilet Rejected",Toast.LENGTH_SHORT).show()
 
-                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
-                                    navController.navigate(action)
+                                    when(fragment){
+                                        "map" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                                        }
+                                        "toilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                                        }
+                                        "newToilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                                        }
+                                    }
+//                                    val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+//                                    navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+//                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                                    navController.navigate(action)
                                 } else {
                                     Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
                                 }
@@ -217,9 +282,12 @@ class ToiletFragment : Fragment() {
                         }
                     }
                 }
+            } else if (purpose.equals("new")) {
+                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                Toast.makeText(activity, "Toilet Creation Cancelled",Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun onClickSaveButton() {
@@ -237,8 +305,24 @@ class ToiletFragment : Fragment() {
 //                                changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
 //                                purpose = "edit"
 
-                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
-                                    navController.navigate(action)
+                                    when(fragment){
+                                        "map" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                                        }
+                                        "toilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                                        }
+                                        "newToilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                                        }
+                                    }
+//                                    val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+//                                    navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+//                                    val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                                    navController.navigate(action)
                                     Toast.makeText(activity, "Toilet Removed",Toast.LENGTH_SHORT).show()
                                 } else {
                                     Toast.makeText(activity, "Access Denied! Only Admin Allowed Make This Change",Toast.LENGTH_SHORT).show()
@@ -259,6 +343,22 @@ class ToiletFragment : Fragment() {
                                     changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
                                     purpose = "edit"
 
+                                    when(fragment){
+                                        "map" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                                        }
+                                        "toilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                                        }
+                                        "newToilets" -> {
+                                            val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                            navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                                        }
+                                    }
+//                                    val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+//                                    navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
 //                                val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
 //                                navController.navigate(action)
                                     Toast.makeText(activity, "Toilet Edit Approved",Toast.LENGTH_SHORT).show()
@@ -308,8 +408,23 @@ class ToiletFragment : Fragment() {
                         databaseRef.child(toilet2.id!!).setValue(toilet2)
                         editing = false
 
+                        when(fragment){
+                            "map" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                            }
+                            "toilets" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                            }
+                            "newToilets" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                            }
+                        }
+
                         Toast.makeText(activity, "Toilet Edit Requested",Toast.LENGTH_SHORT).show()
-                        changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
+//                        changeFields(getString(R.string.suggest_edit), getString(R.string.delete))
                     } else {
                         editing = true
                         changeFields(getString(R.string.save), getString(R.string.cancel))
@@ -329,8 +444,24 @@ class ToiletFragment : Fragment() {
                         toilet.approved = "new"
                         databaseRef.child(toiletId).setValue(toilet)
 
-                        val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
-                        navController.navigate(action)
+                        when(fragment){
+                            "map" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.mapFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_mapFragment, null, navOptions)
+                            }
+                            "toilets" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.toiletsFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_toiletsFragment, null, navOptions)
+                            }
+                            "newToilets" -> {
+                                val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+                                navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+                            }
+                        }
+//                        val navOptions =  NavOptions.Builder().setPopUpTo(R.id.newToiletsFragment, true).build()
+//                        navController.navigate(R.id.action_toiletFragment_to_newToiletsFragment, null, navOptions)
+//                        val action = ToiletFragmentDirections.actionToiletFragmentToNewToiletsFragment()
+//                        navController.navigate(action)
                         Toast.makeText(activity, "New Toilet Requested", Toast.LENGTH_SHORT)
                             .show()
                     }

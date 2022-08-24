@@ -76,7 +76,7 @@ class MapsFragment : Fragment() {
                    val toilet = Toilet()
                    toilet.latitude = latlng.latitude
                    toilet.longitude = latlng.longitude
-                   val action = MapsFragmentDirections.actionMapFragmentToToiletFragment("new", false, toilet)
+                   val action = MapsFragmentDirections.actionMapFragmentToToiletFragment("new", "map",false, toilet)
                    val navController = Navigation.findNavController(requireView())
                    navController.navigate(action)
                    dialog.dismiss()
@@ -115,7 +115,7 @@ class MapsFragment : Fragment() {
 
 
 //                    getToiletRating(marker?.tag as Toilet)
-                    map.setInfoWindowAdapter(MarkerInfoWindowAdapter(requireActivity()))
+                    map.setInfoWindowAdapter(context?.let { MarkerInfoWindowAdapter(it) })
                     toilets.add(toilet)
                 }
 
@@ -129,7 +129,7 @@ class MapsFragment : Fragment() {
 
         map.setOnInfoWindowClickListener { marker ->
 
-            val action = MapsFragmentDirections.actionMapFragmentToToiletFragment("edit",false, marker.tag as Toilet)
+            val action = MapsFragmentDirections.actionMapFragmentToToiletFragment("edit","map",false, marker.tag as Toilet)
             val navController = Navigation.findNavController(requireView())
             navController.navigate(action)
         }

@@ -143,7 +143,7 @@ class ReviewFragment : Fragment() {
 //                saveRating()
             }
 
-            val action = ReviewFragmentDirections.actionReviewFragmentToToiletFragment("edit", false, args.toilet)
+            val action = ReviewFragmentDirections.actionReviewFragmentToToiletFragment("edit", "review",false, args.toilet)
             navController.navigate(action)
             Toast.makeText(activity, "New Review Added", Toast.LENGTH_SHORT).show()
         } else {

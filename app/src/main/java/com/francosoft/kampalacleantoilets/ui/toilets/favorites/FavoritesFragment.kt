@@ -1,27 +1,22 @@
 package com.francosoft.kampalacleantoilets.ui.toilets.favorites
 
-import android.graphics.Canvas
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.francosoft.kampalacleantoilets.R
 import com.francosoft.kampalacleantoilets.adapters.ToiletsAdapter
 import com.francosoft.kampalacleantoilets.data.models.Toilet
 import com.francosoft.kampalacleantoilets.data.models.User
 import com.francosoft.kampalacleantoilets.databinding.FavoritesFragmentBinding
-import com.francosoft.kampalacleantoilets.databinding.FragmentNewToiletsBinding
-import com.francosoft.kampalacleantoilets.databinding.ToiletsFragmentBinding
 import com.francosoft.kampalacleantoilets.ui.toilets.ToiletsFragmentDirections
-import com.francosoft.kampalacleantoilets.ui.toilets.newtolilets.NewToiletsFragmentDirections
 import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -153,7 +148,7 @@ class FavoritesFragment : Fragment(), ToiletsAdapter.OnItemClickListener{
     }
 
     override fun onItemClick(toilet: Toilet) {
-        val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("",false, toilet)
+        val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("","favorites",false, toilet)
         navController.navigate(action)
     }
 }

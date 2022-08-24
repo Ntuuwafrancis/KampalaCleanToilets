@@ -24,7 +24,7 @@
             android:icon="@drawable/ic_baseline_emoji_objects_24"
             android:title="Toilet Tips" />
 
-        <item android:title="">
+        <item android:title="Settings">
             <menu>
 
                 <item
@@ -32,10 +32,10 @@
                     android:icon="@drawable/ic_baseline_account_circle"
                     android:title="Account" />
 
-<!--                <item-->
-<!--                    android:id="@+id/share"-->
-<!--                    android:icon="@drawable/ic_baseline_share_24"-->
-<!--                    android:title="Share" />-->
+                <item
+                    android:id="@+id/shareApp"
+                    android:icon="@drawable/ic_baseline_share_24"
+                    android:title="Share" />
                 <item
                     android:id="@+id/rateAppFragment"
                     android:icon="@drawable/ic_baseline_thumb_up"

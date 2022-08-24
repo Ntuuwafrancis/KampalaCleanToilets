@@ -225,7 +225,7 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(toilet: Toilet) {
-        val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("edit", false, toilet)
+        val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("edit", "toilets",false, toilet)
         navController.navigate(action)
     }
 

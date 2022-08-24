@@ -88,10 +88,10 @@
             android:id="@+id/action_toiletFragment_to_newToiletsFragment"
             app:destination="@id/newToiletsFragment"
             app:popUpTo="@id/toiletFragment" />
-        <action
-            android:id="@+id/action_toiletFragment_to_mapFragment2"
-            app:destination="@id/mapFragment"
-            app:popUpTo="@id/toiletFragment" />
+
+        <argument
+            android:name="fragment"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/toiletsFragment"
@@ -101,8 +101,7 @@
         <action
             android:id="@+id/action_toiletsFragment_to_toiletFragment"
             app:destination="@id/toiletFragment"
-            app:popUpTo="@id/toiletsFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/toiletsFragment" />
         <action
             android:id="@+id/action_toiletsFragment_to_mapFragment"
             app:destination="@id/mapFragment"
@@ -124,7 +123,8 @@
         <action
             android:id="@+id/action_reviewFragment_to_toiletFragment"
             app:destination="@id/toiletFragment"
-            app:popUpTo="@id/toiletFragment" />
+            app:popUpTo="@id/toiletFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="userName"
             app:argType="string"
@@ -182,16 +182,12 @@
         tools:layout="@layout/fragment_new_toilets" >
         <action
             android:id="@+id/action_newToiletsFragment_to_toiletFragment"
-            app:destination="@id/toiletFragment" />
+            app:destination="@id/toiletFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_newToiletsFragment_to_mapFragment"
             app:destination="@id/mapFragment"
             app:popUpTo="@id/mapFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_newToiletsFragment_to_toiletFragment2"
-            app:destination="@id/toiletFragment"
-            app:popUpTo="@id/newToiletsFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

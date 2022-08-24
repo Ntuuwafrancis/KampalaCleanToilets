@@ -21,6 +21,7 @@ import com.francosoft.kampalacleantoilets.databinding.ActivityMainBinding
 import com.francosoft.kampalacleantoilets.databinding.NavHeaderBinding
 import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
 import com.francosoft.kampalacleantoilets.utilities.helpers.RateItDialogFragement
+import com.francosoft.kampalacleantoilets.utilities.helpers.ShareApp.share
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.mapFragment, R.id.toiletsFragment, R.id.favoritesFragment2,R.id.userFragment2, R.id.rateAppFragment, R.id.aboutFragment2
+                R.id.mapFragment, R.id.toiletsFragment, R.id.favoritesFragment2,R.id.userFragment2, R.id.shareApp, R.id.rateAppFragment, R.id.aboutFragment2
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -93,7 +94,9 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.rateAppFragment -> { RateItDialogFragement.show(supportFragmentManager, "Rate App")}
-//                R.id.share -> {}
+                R.id.shareApp -> {
+                    share(this)
+                }
                 else -> {
                     NavigationUI.onNavDestinationSelected(it, navController)
                     drawerLayout.closeDrawers()
