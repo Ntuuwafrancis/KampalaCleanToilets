@@ -12,16 +12,24 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
         <LinearLayout
             tools:viewBindingIgnore="true"
             android:id="@+id/toilet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/medium_padding"
             android:orientation="vertical"
-            android:layout_margin="24dp">
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/tvPurpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:padding="@dimen/low_padding"
+                android:visibility="visible"
+                android:gravity="center"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -50,6 +58,23 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:hint="@string/address"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text=""
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/division"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="@string/division"
                     android:inputType="text"
                     android:maxLines="1"
                     android:text=""
@@ -121,16 +146,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/type"
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/spType"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/type"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:text=""
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:layout_marginTop="@dimen/low_padding"
+                    android:layout_marginBottom="@dimen/low_padding"
+                    android:dropDownWidth="wrap_content"
+                    android:enabled="true"
+                    android:entries="@array/type"
+                    android:focusable="auto"
+                    android:minHeight="48dp" />
+
+<!--                <EditText-->
+<!--                    android:id="@+id/type"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:enabled="false"-->
+<!--                    android:hint="@string/type"-->
+<!--                    android:inputType="text"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:text=""-->
+<!--                    tools:ignore="SpeakableTextPresentCheck" />-->
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -177,20 +214,34 @@
 
             </LinearLayout>
 
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/status"
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/spStatus"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/operational_status"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:text=""
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:layout_marginTop="@dimen/low_padding"
+                    android:layout_marginBottom="@dimen/low_padding"
+                    android:dropDownWidth="wrap_content"
+                    android:enabled="true"
+                    android:entries="@array/status"
+                    android:focusable="auto"
+                    android:minHeight="48dp" />
+
+<!--                <EditText-->
+<!--                    android:id="@+id/status"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:enabled="false"-->
+<!--                    android:hint="@string/operational_status"-->
+<!--                    android:inputType="text"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:text=""-->
+<!--                    tools:ignore="SpeakableTextPresentCheck" />-->
 
             </com.google.android.material.textfield.TextInputLayout>
 

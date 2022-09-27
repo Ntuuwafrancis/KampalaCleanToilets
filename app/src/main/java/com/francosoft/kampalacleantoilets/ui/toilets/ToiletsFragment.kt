@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -17,6 +18,7 @@ import com.francosoft.kampalacleantoilets.R
 import com.francosoft.kampalacleantoilets.adapters.ToiletsAdapter
 import com.francosoft.kampalacleantoilets.data.models.Toilet
 import com.francosoft.kampalacleantoilets.databinding.ToiletsFragmentBinding
+import com.francosoft.kampalacleantoilets.utilities.extensions.onQueryTextChanged
 import com.francosoft.kampalacleantoilets.utilities.helpers.FirebaseUtil
 import com.francosoft.kampalacleantoilets.utilities.helpers.TrackingUtility.isLocationEnabled
 import com.francosoft.kampalacleantoilets.utilities.helpers.TrackingUtility.pleaseEnableLocation
@@ -38,6 +40,7 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var toiletsAdapter: ToiletsAdapter
+    private lateinit var searchView: SearchView
     private var toilets: MutableList<Toilet> = mutableListOf()
 
     companion object {
@@ -64,6 +67,7 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
         binding.apply {
             this@ToiletsFragment.recyclerView = rvToilets
             this@ToiletsFragment.swipeRefreshLayout = swipeLayout
+            this@ToiletsFragment.searchView = toiletsSearchView
         }
 
         FirebaseUtil.openFbReference("toilet", requireActivity())
@@ -86,24 +90,73 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
 
         pleaseEnableLocation(requireContext())
         setUpDbListener()
-        getCurrentLocation()
+        getToiletsByProximity(toilets)
         pullToRefresh()
+        searchToilets()
     }
 
+    private fun searchToilets() {
+        val stoilets = mutableListOf<Toilet>()
+        searchView.onQueryTextChanged { text -> 
+            if (text.trim().isEmpty()) {
+                getToiletsByProximity(toilets)
+                recyclerView.scrollToPosition(0)
+            }
+
+//            for (toilet in toilets) {
+//                if((toilet.stitle?.contains(text.trim(), true) == true)
+//                    || (toilet.division?.equals(text.trim(), true) == true)
+//                    || (toilet.type?.equals(text.trim(), true) == true)
+//                    || (toilet.status?.equals(text.trim(), true) == true)
+//                ){
+//                    stoilets.add(toilet)
+//                }
+//            }
+//            toiletsAdapter.submitList(stoilets)
+//            toiletsAdapter.notifyDataSetChanged()
+
+            val mySearchQuery = databaseRef.orderByValue()
+            mySearchQuery.addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    stoilets.clear()
+                    for (postSnapshot : DataSnapshot in snapshot.children) {
+                        val toilet = postSnapshot.getValue(Toilet::class.java) as Toilet
+                        toilet.id = postSnapshot.key
+
+                        if((toilet.stitle?.contains(text, true) == true)
+                            || (toilet.division?.contains(text, true) == true)
+                            || (toilet.type?.contains(text, true) == true)
+                            || (toilet.status?.contains(text, true) == true)
+                        ){
+                            stoilets.add(toilet)
+                        }
+                    }
+                    toiletsAdapter.submitList(stoilets)
+                    toiletsAdapter.notifyDataSetChanged()
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+                }
+
+            })
+
+        }
+    }
 
     private fun pullToRefresh() {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
-            if (isLocationEnabled(requireContext())) {
-                toiletsAdapter.submitList(toiletsAdapter.currentList)
-                toiletsAdapter.notifyDataSetChanged()
+            if (isLocationEnabled(requireContext()) && toilets.isNotEmpty()) {
+               getToiletsByProximity(toilets)
+                searchView.setQuery("", false)
+                searchView.clearFocus()
             }
         }
     }
 
     @SuppressLint("MissingPermission")
     @AfterPermissionGranted(REQUEST_CODE_LOCATION_PERMISSION)
-    private fun getCurrentLocation(){
+    private fun getToiletsByProximity(toilets: MutableList<Toilet>){
         if(EasyPermissions.hasPermissions(
                 requireContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)){
@@ -118,8 +171,8 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
                     } as MutableList<Toilet>
                     toiletsAdapter.submitList(sortedToilets)
                     toiletsAdapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
                 }
-
             }
 
         } else {
@@ -137,7 +190,6 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
                     )
                 }
                 .show()
-
         }
     }
 
@@ -156,21 +208,12 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
                 for (postSnapshot: DataSnapshot in snapshot.children) {
                     val toilet = postSnapshot.getValue(Toilet::class.java) as Toilet
                     toilet.id = postSnapshot.key
-//                    toilet.id?.let { databaseRef.child(it).setValue(toilet) }
-                    if(toilet.approved.equals("approved") ){
-//                        if ( getToiletRating(toilet )!= 0.0) {
-//                            toilet.rating = getToiletRating(toilet )
-//                        }
+                    if(toilet.approved.equals("approved") || toilet.approved.equals("delete") ){
 
                         toilets.add(toilet)
                         toiletsAdapter.notifyItemInserted(toilets.size - 1)
                     }
-
-//                    toilets.add(toilet)
-//                    toiletsAdapter.notifyItemInserted(toilets.size - 1)
                 }
-
-//                toiletsAdapter.submitList(toilets)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -180,53 +223,31 @@ class ToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
         })
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//
-//    }
-
-    //    private fun getToiletRating(toilet: Toilet) : Double {
-//        var toiletRating: Double = 0.0
-//        val reviews = mutableListOf<Review>()
-//        dbListener = firebaseDb.getReference("review").addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                for (postSnapshot: DataSnapshot in snapshot.children) {
-//                    val review = postSnapshot.getValue(Review::class.java) as Review
-//                    review.id = postSnapshot.key
-//
-//                    if (review.toiletId == toilet.id){
-//                        toiletRating =+ review.rating
-//                        reviews.add(review)
-//                    }
-//                }
-//
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
-//
-//
-//        if (toilet.id != null && reviews.isNotEmpty()) {
-//            toilet.rating = toiletRating.div(reviews.size)
-//            toilet.id?.let { firebaseDb.getReference("toilet").child(it).setValue(toilet) }
-//
-//        }
-//        return toiletRating
-//    }
-
     override fun onResume() {
         super.onResume()
+        searchView.setQuery("", false)
+        searchView.clearFocus()
         toiletsAdapter.notifyDataSetChanged()
     }
 
     override fun onItemClick(toilet: Toilet) {
+//        val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("edit", "toilets",false, toilet)
+//        navController.navigate(action)
+    }
+
+    override fun onItemViewClick(toilet: Toilet) {
+        val action = ToiletsFragmentDirections.actionToiletsFragmentToMapFragment(false, toilet )
+        navController.navigate(action)
+    }
+
+    override fun onItemEditClick(toilet: Toilet) {
         val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("edit", "toilets",false, toilet)
         navController.navigate(action)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        FirebaseUtil.detachListener()
     }
 
 }

@@ -1,23 +1,12 @@
 package com.francosoft.kampalacleantoilets.ui.map
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.francosoft.kampalacleantoilets.R
 import com.francosoft.kampalacleantoilets.data.models.Toilet
-import com.francosoft.kampalacleantoilets.databinding.ActivityMainBinding
-import com.francosoft.kampalacleantoilets.databinding.ToiletFragmentBinding
 import com.francosoft.kampalacleantoilets.databinding.ToiletsListItemBinding
-import com.francosoft.kampalacleantoilets.ui.toilets.ToiletsFragment
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
-import com.google.android.material.snackbar.Snackbar
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 
 //import com.google.codelabs.buildyourfirstmap.place.Place
 
@@ -41,9 +30,14 @@ class MarkerInfoWindowAdapter(
         val toilet = marker.tag as? Toilet ?: return null
 
         // 2. Inflate view and set title, address, and rating
-        binding.tvTitle.text = toilet.title
-        ("Open: " + toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
+        binding.tvTitle.text = toilet.stitle
+        (toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
         binding.tvOpStatus.text = toilet.status
+        binding.tvTotalRatings.text = buildString {
+            append("(")
+            append(toilet.totalRating.toString())
+            append(")")
+        }
         binding.ratingBar1.rating = toilet.rating.toFloat()
         binding.tvType.text = toilet.type
 
@@ -54,11 +48,17 @@ class MarkerInfoWindowAdapter(
         // 1. Get tag
         val toilet = marker.tag as? Toilet ?: return null
 
-        binding.tvTitle.text = toilet.title
-        ("Open: " + toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
+        binding.tvTitle.text = toilet.stitle
+        (toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
         binding.tvOpStatus.text = toilet.status
+        binding.tvTotalRatings.text = buildString {
+            append("(")
+            append(toilet.totalRating.toString())
+            append(")")
+        }
         binding.ratingBar1.rating = toilet.rating.toFloat()
         binding.tvType.text = toilet.type
+        binding.tvAddress.text = toilet.address
 
         return view
     }

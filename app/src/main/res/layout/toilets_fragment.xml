@@ -24,6 +24,32 @@
             android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/add_button" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_padding"
+            android:layout_marginTop="@dimen/low_padding"
+            android:layout_marginEnd="@dimen/medium_padding"
+            app:cardCornerRadius="@dimen/large_padding"
+            app:cardElevation="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/toilets_searchView"
+                style="@style/SearchViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:accessibilityLiveRegion="assertive"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:queryHint="Search name, type, status, division" />
+
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvToilets"
             android:layout_width="0dp"
@@ -32,8 +58,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:itemCount="4"
+            app:layout_constraintTop_toBottomOf="@+id/cvSearch"
             tools:listitem="@layout/toilets_list_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

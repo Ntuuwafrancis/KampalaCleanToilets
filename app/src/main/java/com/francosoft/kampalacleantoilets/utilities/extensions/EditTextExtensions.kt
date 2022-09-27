@@ -1,6 +1,7 @@
 package com.francosoft.kampalacleantoilets.utilities.extensions
 
 import android.widget.EditText
+import android.widget.Spinner
 
 fun enableOrDisable(
     editText: EditText
@@ -13,3 +14,16 @@ fun enableOrDisable(
         false
     }
 }
+
+fun enableOrDisableSp(
+    sp : Spinner
+) : Boolean{
+    return if (sp.isEnabled){
+        sp.isEnabled = false
+        true
+    }else {
+        sp.isEnabled = true
+        false
+    }
+}
+

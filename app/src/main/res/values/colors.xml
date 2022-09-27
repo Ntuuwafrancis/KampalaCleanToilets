@@ -5,9 +5,13 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">@color/Official_i3c_color</color>
+    <color name="colorPrimaryTranslucent">#331B3665</color>
+    <color name="red_100">#D50000</color>
+    <color name="green_100">#127816</color>
+    <color name="blue_100">#1B2E9A</color>
 
     <color name="transparent">#00FFFFFF</color>
     <color name="Official_i3c_color">#FF01579B</color>
@@ -25,5 +29,6 @@
     <color name="sky_blue">#90CAF9</color>
     <color name="sky_blue_dark">#7C90CAF9</color>
     <color name="bgTintColor">#861B3665</color>
+    <color name="icon_color">#010B48</color>
 
 </resources>

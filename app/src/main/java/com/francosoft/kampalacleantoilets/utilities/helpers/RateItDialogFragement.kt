@@ -61,7 +61,7 @@ object RateItDialogFragement: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(activity)
-            .setTitle("Rate Kampala Clean Toilets" )
+            .setTitle("Rate Clean Toilet Locator" )
             .setMessage("Give a 5 star if you like this app")
             .setPositiveButton(
                 R.string.ok,
@@ -71,7 +71,8 @@ object RateItDialogFragement: DialogFragment() {
                             it,
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("market://details?id=" + requireActivity().packageName)
+                                Uri.parse("market://details?id=com.app.cleantoiletlocator")
+//                                        + requireActivity().packageName
                             ), null
                         )
                     }

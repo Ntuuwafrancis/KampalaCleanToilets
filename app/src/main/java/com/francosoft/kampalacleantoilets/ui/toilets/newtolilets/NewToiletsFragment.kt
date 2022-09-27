@@ -64,7 +64,7 @@ class NewToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
         databaseRef = FirebaseUtil.databaseReference
         auth = FirebaseUtil.firebaseAuth
 
-       isUserAdmin()
+        isUserAdmin()
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -97,10 +97,12 @@ class NewToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
                         val toilet = postSnapshot.getValue(Toilet::class.java) as Toilet
                         toilet.id = postSnapshot.key
 //                    toilet.id?.let { databaseRef.child(it).setValue(toilet) }
-                        if(toilet.approved.equals("new") || toilet.approved.equals("delete") || toilet.approved.equals("edit")){
+                        if(toilet.approved.equals("new") || toilet.approved.equals("delete")){
                             toilets.add(toilet)
                             toiletsAdapter.notifyItemInserted(toilets.size - 1)
                         }
+
+
 
 //                        if (isUserAdmin()){
 //                            toilets.add(toilet)
@@ -113,7 +115,8 @@ class NewToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
 //                        }
                     }
 
-                toiletsAdapter.submitList(toilets)
+                    getEditedToilets()
+                    toiletsAdapter.submitList(toilets)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -123,6 +126,28 @@ class NewToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
             })
         }
 
+    }
+
+        private fun getEditedToilets() {
+        dbListener = firebaseDb.getReference("editedToilet").addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (postSnapshot: DataSnapshot in snapshot.children) {
+                    val toilet = postSnapshot.getValue(Toilet::class.java) as Toilet
+                    toilet.id = postSnapshot.key
+
+                    if( toilet.approved.equals("edit")){
+                        toilets.add(toilet)
+                        toiletsAdapter.notifyItemInserted(toilets.size - 1)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
 //    private fun pullToRefresh() {
@@ -169,5 +194,18 @@ class NewToiletsFragment : Fragment(), ToiletsAdapter.OnItemClickListener {
     override fun onResume() {
         super.onResume()
         toiletsAdapter.notifyDataSetChanged()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        FirebaseUtil.detachListener()
+    }
+
+    override fun onItemViewClick(toilet: Toilet) {
+        Toast.makeText(requireContext(), "This toilet has pending changes. Cannot be viewed on map!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemEditClick(toilet: Toilet) {
+        Toast.makeText(requireContext(), "This toilet has pending changes. Cannot be Edited!", Toast.LENGTH_SHORT).show()
     }
 }

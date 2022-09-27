@@ -2,7 +2,6 @@ package com.francosoft.kampalacleantoilets.utilities.helpers
 
 import android.content.Context
 import android.content.Intent
-import com.francosoft.kampalacleantoilets.BuildConfig
 
 object ShareApp {
 
@@ -10,11 +9,11 @@ object ShareApp {
         try {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Kampala Clean Toilets")
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Clean Toilet Locator")
             var shareMessage = "\nLet me recommend you this application\n\n"
             shareMessage =
                 """
-                        ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}
+                        ${shareMessage}https://play.google.com/store/apps/details?id=com.app.cleantoiletlocator
 
 
                         """.trimIndent()

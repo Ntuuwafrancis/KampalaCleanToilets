@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/light_blue_600</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
         <!-- Customize your theme here. -->
     </style>
@@ -33,11 +33,11 @@
 
     <style name="Theme.KampalaCleanToilets.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-<!--    <style name="Theme.KampalaCleanToilets.Fullscreen" parent="Theme.KampalaCleanToilets">-->
-<!--        <item name="android:actionBarStyle">@style/Widget.Theme.KampalaCleanToilets.ActionBar.Fullscreen</item>-->
-<!--        <item name="android:windowActionBarOverlay">true</item>-->
-<!--        <item name="android:windowBackground">@null</item>-->
-<!--    </style>-->
+    <!--    <style name="Theme.KampalaCleanToilets.Fullscreen" parent="Theme.KampalaCleanToilets">-->
+    <!--        <item name="android:actionBarStyle">@style/Widget.Theme.KampalaCleanToilets.ActionBar.Fullscreen</item>-->
+    <!--        <item name="android:windowActionBarOverlay">true</item>-->
+    <!--        <item name="android:windowBackground">@null</item>-->
+    <!--    </style>-->
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
         <item name="android:textColor">@color/white</item>
@@ -45,8 +45,13 @@
         <item name="android:textColorHint">@color/white</item>
     </style>
 
-<!--    <style name="ThemeOverlay.KampalaCleanToilets.FullscreenContainer" parent="">-->
-<!--        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>-->
-<!--        <item name="fullscreenTextColor">@color/light_blue_A200</item>-->
-<!--    </style>-->
+    <style name="ThemeOverlay.KampalaCleanToilets.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
+    <!--    <style name="ThemeOverlay.KampalaCleanToilets.FullscreenContainer" parent="">-->
+    <!--        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>-->
+    <!--        <item name="fullscreenTextColor">@color/light_blue_A200</item>-->
+    <!--    </style>-->
 </resources>

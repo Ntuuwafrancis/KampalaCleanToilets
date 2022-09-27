@@ -1,0 +1,109 @@
+Index: app/src/main/java/com/francosoft/kampalacleantoilets/ui/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/francosoft/kampalacleantoilets/ui/MainActivity.kt b/app/src/main/java/com/francosoft/kampalacleantoilets/ui/MainActivity.kt
+--- a/app/src/main/java/com/francosoft/kampalacleantoilets/ui/MainActivity.kt	
++++ b/app/src/main/java/com/francosoft/kampalacleantoilets/ui/MainActivity.kt	(date 1663448861504)
+@@ -49,6 +49,9 @@
+ import com.google.firebase.auth.ktx.auth
+ import com.google.firebase.database.*
+ import com.google.firebase.ktx.Firebase
++import java.util.concurrent.Executors
++import java.util.concurrent.ScheduledExecutorService
++import java.util.concurrent.TimeUnit
+ 
+ 
+ class MainActivity : AppCompatActivity() {
+@@ -204,30 +207,46 @@
+     private fun startGeofences(){
+ //        AppExecutors.instance?.diskIO()?.execute{
+ //        }
+-        val database = FirebaseDatabase.getInstance()
+-        val dbref = database.getReference("toilet")
+-        val valueEventListener: ValueEventListener = object : ValueEventListener {
+-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+-                toilets.clear()
+-                for (ds in dataSnapshot.children) {
+-                    val toilet = ds.getValue(Toilet::class.java) as Toilet
++
++        // Create an executor that executes tasks in a background thread.
++        val backgroundExecutor: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
++
++// Execute a task in the background thread.
++//        backgroundExecutor.execute {
++//            // Your code logic goes here.
++//        }
++
++// Execute a task in the background thread after 3 seconds.
++        backgroundExecutor.schedule({
++            // Your code logic goes here
++            val database = FirebaseDatabase.getInstance()
++            val dbref = database.getReference("toilet")
++            val valueEventListener: ValueEventListener = object : ValueEventListener {
++                override fun onDataChange(dataSnapshot: DataSnapshot) {
++                    toilets.clear()
++                    for (ds in dataSnapshot.children) {
++                        val toilet = ds.getValue(Toilet::class.java) as Toilet
+ 
+-                    if (toilet.approved.equals("approved")
+-                        || toilet.approved.equals("delete")){
+-                        toilets.add(toilet)
+-                        geofenceList.add(GeofenceUtils.createGeofence(toilet, 100f))
+-                    }
+-                }
+-                Log.d(TAG, toilets.size.toString())
+-                getUser(binding.root, toilets)
+-                //Do what you need to do with your violations list
+-            }
++                        if (toilet.approved.equals("approved") || toilet.approved.equals("delete")){
++                            toilets.add(toilet)
++                            geofenceList.add(GeofenceUtils.createGeofence(toilet, 100f))
++
++                        }
++                    }
++//                removeTriggeredGeofence()?.let { geofenceList.removeAll(it) }
++                    Log.d(TAG, toilets.size.toString())
++                    getUser(binding.root, toilets)
++                    //Do what you need to do with y our violations list
++                }
+ 
+-            override fun onCancelled(databaseError: DatabaseError) {
+-                Log.d(TAG, databaseError.message)
+-            }
+-        }
+-        dbref.addListenerForSingleValueEvent(valueEventListener)
++                override fun onCancelled(databaseError: DatabaseError) {
++                    Log.d(TAG, databaseError.message)
++                }
++            }
++            dbref.addListenerForSingleValueEvent(valueEventListener)
++        }, 3, TimeUnit.SECONDS)
++        backgroundExecutor.shutdown()
++
+     }
+ 
+     private fun switchOnFences(view: View, toilets: MutableList<Toilet>) {
+@@ -347,9 +366,6 @@
+ 
+     override fun onStart() {
+         super.onStart()
+-        if (toilets.isNotEmpty()) {
+-            getUser(binding.root,toilets)
+-        }
+ //        examinePermissionAndInitiateGeofence(binding.root)
+         // Check if user is signed in (non-null) and update UI accordingly.
+         val currentUser = auth.currentUser
+@@ -443,11 +459,6 @@
+         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+     }
+ 
+-    override fun onPause() {
+-        super.onPause()
+-        FirebaseUtil.detachListener()
+-    }
+-
+     override fun onStop() {
+         super.onStop()
+         auth.removeAuthStateListener (fbListener)

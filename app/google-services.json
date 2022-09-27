@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "589078259412",
-    "firebase_url": "https://kampala-clean-toilets-default-rtdb.firebaseio.com",
-    "project_id": "kampala-clean-toilets",
-    "storage_bucket": "kampala-clean-toilets.appspot.com"
+    "project_number": "404845295332",
+    "firebase_url": "https://clean-toilet-locator-default-rtdb.firebaseio.com",
+    "project_id": "clean-toilet-locator",
+    "storage_bucket": "clean-toilet-locator.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:589078259412:android:4eadb68bd06e010083fd41",
+        "mobilesdk_app_id": "1:404845295332:android:54682119eb949365f41ef1",
         "android_client_info": {
           "package_name": "com.francosoft.kampalacleantoilets"
         }
       },
       "oauth_client": [
         {
-          "client_id": "589078259412-0fn0mjggo829c4ae8gkaqak27v15jtb1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.francosoft.kampalacleantoilets",
-            "certificate_hash": "5092e5989efcaf9b2092fb73c4f0ff42ed0dce0e"
-          }
-        },
-        {
-          "client_id": "589078259412-btecpdiodmi4euuhk84ju9snnnnfgaa2.apps.googleusercontent.com",
+          "client_id": "404845295332-lii3t81nuonuil2hsmt8cg8qg6c62sdi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDyj7fbtVpOvDOTUYdK9EpGYZ-pTuxcX9c"
+          "current_key": "AIzaSyDuY8T4aK0oFB_XMmxFIkUZkLlBGVC8dT8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "589078259412-btecpdiodmi4euuhk84ju9snnnnfgaa2.apps.googleusercontent.com",
+              "client_id": "404845295332-lii3t81nuonuil2hsmt8cg8qg6c62sdi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

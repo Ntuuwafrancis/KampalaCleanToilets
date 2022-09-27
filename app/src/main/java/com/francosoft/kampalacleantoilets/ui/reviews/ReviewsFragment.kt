@@ -78,25 +78,29 @@ class ReviewsFragment : Fragment(){
         getReviews()
     }
 
-
-
     private fun getReviews() {
         dbListener = databaseRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 reviews.clear()
+                var reviewsTotal = 0.0
 
                 for (postSnapshot: DataSnapshot in snapshot.children) {
                     val review = postSnapshot.getValue(Review::class.java) as Review
                     review.id = postSnapshot.key
 
                     if (review.toiletId == args.toilet?.id){
-                        toiletRating =+ review.rating
+                        toiletRating = toiletRating?.plus(review.rating)
                         reviews.add(review)
-                        reviewsAdapter.notifyItemInserted(reviews.size - 1)
+                        reviewsTotal += review.rating
+                        if (reviews.isNotEmpty())
+                            reviewsAdapter.notifyItemInserted(reviews.size - 1)
                     }
                 }
 
                 reviewsAdapter.submitList(reviews)
+                reviewsAdapter.notifyDataSetChanged()
+                toilet?.totalRating = reviews.size
+                toilet?.let { getToiletRating(it, reviewsTotal) }
 
             }
 
@@ -106,6 +110,31 @@ class ReviewsFragment : Fragment(){
 
         })
 
+    }
+
+    private fun getToiletRating(toilet: Toilet, reviewTotal: Double) {
+
+        if (toilet.id != null) {
+            val rating = toilet.totalRating
+            if (rating > 0 && reviewTotal > 0.0){
+                toilet.rating = reviewTotal.div(rating)
+                toilet.id?.let { firebaseDb.getReference("toilet").child(it).setValue(toilet) }
+
+//                if (activity != null) {
+//                    Toast.makeText(activity,"total rating = $rating", Toast.LENGTH_SHORT ).show()
+//                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        reviewsAdapter.notifyDataSetChanged()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        FirebaseUtil.detachListener()
     }
 
 }

@@ -24,7 +24,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/creditAddCard"
-                android:layout_width="237dp"
+                android:layout_width="150dp"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,18 +35,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/txt_account_details"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center"-->
-<!--                    android:padding="@dimen/medium_padding"-->
-<!--                    android:text="Account"-->
-<!--                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"-->
-<!--                    android:textColor="#FFEBEE"-->
-<!--                    android:textSize="20sp">-->
+                <TextView
+                    android:id="@+id/txt_account_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="@dimen/low_padding"
+                    android:text="Account"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="#FFEBEE"
+                    android:textSize="20sp">
 
-<!--                </TextView>-->
+                </TextView>
 
             </androidx.cardview.widget.CardView>
 
@@ -144,7 +144,128 @@
 
             </LinearLayout>
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchOnNearby"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:text="@string/enable_nearby_toilet_notifications"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTutorial"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_padding"
+                    android:backgroundTint="@color/black_overlay"
+                    android:text= "Feature Tutorial"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateTypesReport"
+                    style="?android:textAppearanceSmall"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_padding"
+                    android:backgroundTint="@color/black_overlay"
+                    android:text="Generate Types Reports"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateStatusReport"
+                    style="?android:textAppearanceSmall"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_padding"
+                    android:backgroundTint="@color/black_overlay"
+                    android:text="Generate Status Reports"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateDivisionsReport"
+                    style="?android:textAppearanceSmall"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_padding"
+                    android:backgroundTint="@color/black_overlay"
+                    android:text="Generate Divisions Reports"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateAllToiletsReport"
+                    style="?android:textAppearanceSmall"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_padding"
+                    android:backgroundTint="@color/black_overlay"
+                    android:text="Generate All Toilets Report"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="50dp"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:id="@+id/tvReportView"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--            <RadioGroup-->
+<!--                android:id="@+id/distanceRadioGroup"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingBottom="@dimen/large_padding">-->
+<!--                <RadioButton-->
+<!--                    android:checked="true"-->
+<!--                    android:id="@+id/oneHundredMBtn"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="100 m"/>-->
+<!--                <RadioButton-->
+<!--                    android:id="@+id/fiveHundredMBtn"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="500 m"/>-->
+<!--                <RadioButton-->
+<!--                    android:id="@+id/oneKmBtn"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="1 km"/>-->
+
+<!--            </RadioGroup>-->
+
         </LinearLayout>
+
+
 
 
     </androidx.core.widget.NestedScrollView>

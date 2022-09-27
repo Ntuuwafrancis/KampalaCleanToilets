@@ -1,14 +1,10 @@
 package com.francosoft.kampalacleantoilets.ui.review
 
-import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -21,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ReviewFragment : Fragment() {
 
@@ -47,7 +45,7 @@ class ReviewFragment : Fragment() {
         return inflater.inflate(R.layout.review_fragment, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+//    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        viewModel = ViewModelProvider(this)[ReviewViewModel::class.java]
@@ -126,7 +124,7 @@ class ReviewFragment : Fragment() {
 //
 //    }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+//    @RequiresApi(Build.VERSION_CODES.N)
     private fun saveReview() {
         if (auth.currentUser != null) {
             val review = captureEditTextFields()
@@ -140,14 +138,37 @@ class ReviewFragment : Fragment() {
                 review.id = reviewId
                 reviewRating = review.rating
                 databaseRef.child(reviewId).setValue(review)
-//                saveRating()
+                saveRating(review)
             }
 
             val action = ReviewFragmentDirections.actionReviewFragmentToToiletFragment("edit", "review",false, args.toilet)
             navController.navigate(action)
-            Toast.makeText(activity, "New Review Added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "New Review Added", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(activity, "Access Denied! Please Login To Make Changes", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Access Denied! Please Login To Make Changes", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveRating(review: Review) {
+        if (args.toilet != null) {
+            val toilet = args.toilet
+            var totalRating: Int
+            var ratingTotal: Double
+            if (toilet?.totalRating != null) {
+                totalRating = toilet.totalRating
+                ratingTotal = toilet.ratingTotal
+            } else {
+                totalRating = 0
+                ratingTotal = 0.0
+            }
+            totalRating = totalRating.plus(1)
+            ratingTotal = ratingTotal.plus(review.rating)
+
+            toilet?.rating = ratingTotal.div(totalRating)
+            toilet?.ratingTotal = ratingTotal
+            toilet?.totalRating = totalRating
+            val toiletId: String = toilet?.id.toString()
+            firebaseDb.getReference("toilet").child(toiletId).setValue(toilet)
         }
     }
 

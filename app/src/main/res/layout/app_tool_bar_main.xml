@@ -22,7 +22,8 @@
             <ImageView
                 android:id="@+id/img_app_icon"
                 android:layout_width="75dp"
-                android:layout_height="80dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/low_padding"
                 android:layout_marginEnd="@dimen/low_padding"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/kct_icon"

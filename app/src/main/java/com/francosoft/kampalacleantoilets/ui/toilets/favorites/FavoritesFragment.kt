@@ -147,8 +147,21 @@ class FavoritesFragment : Fragment(), ToiletsAdapter.OnItemClickListener{
         return isAdmin
     }
 
+    override fun onPause() {
+        super.onPause()
+        FirebaseUtil.detachListener()
+    }
+
     override fun onItemClick(toilet: Toilet) {
+
+    }
+
+    override fun onItemViewClick(toilet: Toilet) {
         val action = ToiletsFragmentDirections.actionToiletsFragmentToToiletFragment("","favorites",false, toilet)
         navController.navigate(action)
+    }
+
+    override fun onItemEditClick(toilet: Toilet) {
+        TODO("Not yet implemented")
     }
 }

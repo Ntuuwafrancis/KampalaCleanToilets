@@ -2,18 +2,13 @@ package com.francosoft.kampalacleantoilets.adapters
 
 import android.content.Context
 import android.location.Location
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.CompoundButton
-import androidx.core.content.ContextCompat
+import android.view.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.francosoft.kampalacleantoilets.R
 import com.francosoft.kampalacleantoilets.data.models.Toilet
 import com.francosoft.kampalacleantoilets.databinding.ToiletsListItemBinding
-import java.util.*
 
 
 class ToiletsAdapter(private val context: Context) :
@@ -60,30 +55,56 @@ class ToiletsAdapter(private val context: Context) :
         holder.bindTo(getItem(position))
         holder.itemView.setOnClickListener {
             if (position != RecyclerView.NO_POSITION) {
+//                onItemClickListener.onItemViewClick(getItem(position))
+//                onItemClickListener.onItemEditClick(getItem(position))
                 onItemClickListener.onItemClick(getItem(position))
             }
         }
     }
 
     inner class ViewHolder(private val binding: ToiletsListItemBinding) :
-            RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root), MenuItem.OnMenuItemClickListener {
 
-                fun bindTo(toilet: Toilet) {
-                    binding.tvTitle.text = toilet.title
-                    ("Open: " + toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
-                    binding.tvOpStatus.text = toilet.status
-                    binding.ratingBar1.rating = toilet.rating.toFloat()
-                    binding.tvType.text = toilet.type
-                    if (currentLocation != null) {
-                        binding.tvDistance.visibility = View.VISIBLE
-                        binding.tvDistance.text = context.getString(
-                            R.string.distance_value,
-                            toilet.getDistanceInMiles(currentLocation!!)
-                        )
-                    }
-                    if (toilet.approved != null) {
-                        binding.tvApproved.text = toilet.approved
-                    }
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClickListener.onItemViewClick(getToilet(position))
+                }
+            }
+
+            itemView.setOnCreateContextMenuListener { menu, _, _ ->
+                menu.setHeaderTitle("Select Action")
+                val toiletView = menu.add(Menu.NONE, 1,1, "View Toilet")
+                val editToilet = menu.add(Menu.NONE, 2,2, "Edit Toilet")
+
+                toiletView.setOnMenuItemClickListener(this)
+                editToilet.setOnMenuItemClickListener(this)
+            }
+        }
+        fun bindTo(toilet: Toilet) {
+            binding.tvTitle.text = toilet.stitle
+            (toilet.openTime + " - " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
+            binding.tvOpStatus.text = toilet.status
+            binding.ratingBar1.rating = toilet.rating.toFloat()
+            binding.tvTotalRatings.text = buildString {
+        append("(")
+        append(toilet.totalRating.toString())
+        append(")")
+    }
+            binding.tvType.text = toilet.type
+            binding.tvAddress.text = toilet.address
+            binding.tvDivision.text = toilet.division
+            if (currentLocation != null) {
+                binding.tvDistance.visibility = View.VISIBLE
+                binding.tvDistance.text = context.getString(
+                    R.string.distance_value,
+                    toilet.getDistanceInMiles(currentLocation!!)
+                )
+            }
+            if (toilet.approved != null) {
+                binding.tvApproved.text = toilet.approved
+            }
 
 //                    if (fav) {
 //                        binding.imgFavorite.setImageResource(com.francosoft.kampalacleantoilets.R.drawable.ic_baseline_favorite_red);
@@ -102,6 +123,18 @@ class ToiletsAdapter(private val context: Context) :
 //                    }
                 }
 
+        override fun onMenuItemClick(item: MenuItem?): Boolean {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                if (item != null) {
+                    when(item.itemId){
+                        1 -> onItemClickListener.onItemViewClick(getToilet(position))
+                        2 -> onItemClickListener.onItemEditClick(getToilet(position))
+                    }
+                }
+            }
+            return false
+        }
     }
 
 //    private fun setFavorites(fav: Boolean): Boolean {
@@ -110,6 +143,10 @@ class ToiletsAdapter(private val context: Context) :
 
     interface OnItemClickListener {
         fun onItemClick(toilet: Toilet)
+
+        fun onItemViewClick(toilet: Toilet)
+
+        fun onItemEditClick(toilet: Toilet)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
