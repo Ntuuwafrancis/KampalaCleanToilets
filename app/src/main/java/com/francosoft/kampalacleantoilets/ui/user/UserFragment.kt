@@ -141,6 +141,8 @@ class UserFragment : Fragment() {
             }
         }
 
+//        btnTutorial.visibility = View.GONE
+
         btnTutorial.setOnClickListener {
             val action = UserFragmentDirections.actionUserFragment2ToTutorialFragment()
             navController.navigate(action)

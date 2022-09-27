@@ -290,7 +290,7 @@ class MapsFragment : Fragment() {
         val fbNearestMarker = binding.fbNearest
         toilet = args.toilet
 
-        newShowcase(fbNearestMarker, requireActivity(), "GOT IT", "This button shows you the nearest toilet to your location", SHOWCASE_ID)
+        newShowcase(fbNearestMarker, requireActivity(), "GOT IT", "Click this button to show the nearest toilet to your location", SHOWCASE_ID)
         // Create channel for notifications
 //        createChannel(requireContext() )
 

@@ -81,7 +81,7 @@ class TutorialFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentTutorialBinding.inflate(inflater, container, false)
         return binding.root
@@ -110,60 +110,8 @@ class TutorialFragment : Fragment() {
         val showId = Calendar.getInstance().get(Calendar.MILLISECOND)
         // Set up the user interaction to manually show or hide the system UI.
         fullscreenContent?.setOnClickListener { toggle() }
-//
-//        addShowcaseSequence(
-//            binding.nearest,
-//            requireActivity(),
-//            "GOT IT",
-//            "Click this button to show the nearest toilet to your location",
-//            showId.toString()
-//        )
-//
-//        addShowcaseSequence(
-//            binding.myPinBtn,
-//            requireActivity(),
-//            "GOT IT",
-//            "This button shows your precise location on map",
-//            showId.toString()
-//        )
-//        addShowcaseSequence(
-//            binding.toiletBtn,
-//            requireActivity(),
-//            "GOT IT",
-//            "This button shows a toilet location. Click it to show more options",
-//            showId.toString()
-//        )
-//        addShowcaseSequence(
-//            binding.directions,
-//            requireActivity(),
-//            "GOT IT",
-//            "After clicking on toilet button, click this button open directions on google maps to toilet from your location",
-//            showId.toString()
-//        )
-//        addShowcaseSequence(
-//            binding.pinOnMap,
-//            requireActivity(),
-//            "GOT IT",
-//            "After clicking on toilet button, Click this button show the toilet on google maps with distance and image details",
-//            showId.toString()
-//        )
-//        addShowcaseSequence(
-//            binding.card,
-//            requireActivity(),
-//            "GOT IT",
-//            "This is the toilet details card. It appears after clicking on toilet button, Click this button show more toilet details and edit options",
-//            showId.toString()
-//        )
-//        addShowcaseSequence(
-//            binding.zoom,
-//            requireActivity(),
-//            "GOT IT",
-//            "Click these buttons to zoom on map",
-//            showId.toString()
-//        )
 
-
-        // sequence example
+        // sequence
         val config = ShowcaseConfig()
         config.delay = 500 // half second between each showcase view
         val sequence = MaterialShowcaseSequence(requireActivity(), showId.toString())
@@ -231,7 +179,8 @@ class TutorialFragment : Fragment() {
         super.onPause()
 //        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
-        // Clear the systemUiVisibility flag
+//        WindowInsetsController.BEHAVIOR_DEFAULT
+//         Clear the systemUiVisibility flag
 //        activity?.window?.decorView?.systemUiVisibility = 0
 //        show()
     }

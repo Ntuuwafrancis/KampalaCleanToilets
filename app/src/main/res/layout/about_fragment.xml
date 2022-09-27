@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.about.AboutFragment">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_toilet"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/low_padding"
-        app:cardElevation="@dimen/low_padding"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical" >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_about2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/low_padding"
-            android:layout_marginBottom="@dimen/low_padding"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
+            app:cardCornerRadius="@dimen/low_padding"
+            app:cardElevation="@dimen/low_padding"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,10 +30,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/large_padding"
-                android:paddingEnd="@dimen/medium_padding">
-
-
-
+                android:paddingEnd="@dimen/low_padding">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -50,6 +43,7 @@
                         android:text="@string/app_name"
                         android:textSize="18sp"
                         android:textStyle="bold"
+                        android:layout_marginTop="@dimen/low_padding"
                         android:layout_marginBottom="@dimen/medium_padding"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -58,70 +52,200 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/tvReview"
+                    android:id="@+id/tvInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/low_padding"
                     android:background="#17C0CA33"
                     android:text="Clean Toilet Locator (CTL app) is a public service mobile app that enables users to locate both public
-and private nearby toilets in Kampala using Google Maps. CTL app also enables users to add new and available toilets in kampala using Google Maps.
-"
+and private nearby toilets in Kampala using Google Maps. CTL app also enables users to add new and available toilets in kampala using Google Maps."
                     android:textSize="14sp"
                     />
 
                 <TextView
-                    android:id="@+id/tvReview2"
+                    android:id="@+id/tvInfo2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/low_padding"
                     android:background="#17C0CA33"
-                    android:text="CTL Android | 2022.22.08 Version 1.0.0
-Build #AI-1.0.0, built on August 22, 2022
-Runtime version: 1.0.0.1
-VM: OpenJDK 64-Bit Server VM by Oracle Corporation
-Minimum Android verion - Android 5 (Lollipop)
-Target Android verion - Android 12 (S)
-Size: 15 MB
-Registry: Google Maps Android =true,
-Permissions: GPS Location, Internet "
+                    android:paddingStart="@dimen/low_padding"
+                    android:text="CTL Android | 2022.22.08 Version 1.0.0"
                     android:textSize="14sp"
                     />
 
                 <TextView
-                    android:id="@+id/tvReview3"
+                    android:id="@+id/tvInfo3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/low_padding"
+                    android:paddingStart="@dimen/low_padding"
                     android:background="#17C0CA33"
-                    android:text="Credits for this app go to Aidah Nabukenya and
-James Kitaka"
+                    android:text="Build #AI-1.0.0, built on August 22, 2022"
                     android:textSize="14sp"
                     />
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="150dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
+                <TextView
+                    android:id="@+id/tvInfo4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/low_padding"
+                    android:background="#17C0CA33"
+                    android:text="Runtime version: 1.0.0.1"
+                    android:textSize="14sp"
+                    />
 
-<!--                    <com.google.android.material.button.MaterialButton-->
-<!--                        android:id="@+id/toilet_update"-->
-<!--                        style="?android:textAppearanceSmall"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:backgroundTint="@color/Official_i3c_color"-->
-<!--                        android:text="Save"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:textStyle="bold" />-->
+                <TextView
+                    android:id="@+id/tvInfo5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/low_padding"
+                    android:background="#17C0CA33"
+                    android:text="VM: OpenJDK 64-Bit Server VM by Oracle Corporation"
+                    android:textSize="14sp"
+                    />
 
-<!--                </LinearLayout>-->
+                <TextView
+                    android:id="@+id/tvInfo6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/low_padding"
+                    android:background="#17C0CA33"
+                    android:text="Minimum Android Version - Android 5 (Lollipop)"
+                    android:textSize="14sp"
+                    />
 
+                <TextView
+                    android:id="@+id/tvInfo7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/low_padding"
+                    android:background="#17C0CA33"
+                    android:text="Target Android verion - Android 12 (S)"
+                    android:textSize="14sp"
+                    />
 
+                <TextView
+                    android:id="@+id/tvInfo8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/low_padding"
+                    android:paddingBottom="@dimen/medium_padding"
+                    android:layout_marginBottom="@dimen/low_padding"
+                    android:background="#17C0CA33"
+                    android:text="Size: 18 MB"
+                    android:textSize="14sp"
+                    />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"
+                    android:orientation="vertical"
+                    >
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTerms"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/low_padding"
+                        android:backgroundTint="@color/Official_i3c_color"
+                        android:text="Terms &amp; Conditions"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_about3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/low_padding"
+            app:cardElevation="@dimen/low_padding"
+           app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/large_padding"
+                android:paddingEnd="@dimen/low_padding">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/low_padding"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvCredits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Credits"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/low_padding"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvInfo10"
+                        style="@android:style/Widget.Material.TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#17C0CA33"
+                        android:paddingStart="@dimen/low_padding"
+                        android:text="Aidah Nabukenya"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvInfo11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#17C0CA33"
+                        android:paddingStart="@dimen/low_padding"
+                        android:paddingBottom="@dimen/low_padding"
+                        android:text="Software Development"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/low_padding"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tvInfo12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/low_padding"
+                        android:background="#17C0CA33"
+                        android:text="James Kitaka"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvInfo13"
+                        style="@android:style/Widget.Material.TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#17C0CA33"
+                        android:paddingStart="@dimen/low_padding"
+                        android:paddingBottom="@dimen/low_padding"
+                        android:text="Software Development"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

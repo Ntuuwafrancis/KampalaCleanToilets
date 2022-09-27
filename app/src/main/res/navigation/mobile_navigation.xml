@@ -159,7 +159,12 @@
         android:id="@+id/aboutFragment2"
         android:name="com.francosoft.kampalacleantoilets.ui.about.AboutFragment"
         android:label="About App"
-        tools:layout="@layout/about_fragment" />
+        tools:layout="@layout/about_fragment" >
+        <action
+            android:id="@+id/action_aboutFragment2_to_termsFragment"
+            app:destination="@id/termsFragment"
+            app:popUpTo="@id/aboutFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment2"
         android:name="com.francosoft.kampalacleantoilets.ui.toilets.favorites.FavoritesFragment"
@@ -218,6 +223,11 @@
     <fragment
         android:id="@+id/tutorialFragment"
         android:name="com.francosoft.kampalacleantoilets.ui.user.tutorial.TutorialFragment"
-        android:label="Tutorial"
+        android:label="Map Tutorial"
         tools:layout="@layout/fragment_tutorial" />
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.francosoft.kampalacleantoilets.ui.about.terms.TermsFragment"
+        android:label="Terms &amp; Conditions"
+        tools:layout="@layout/fragment_terms" />
 </navigation>
