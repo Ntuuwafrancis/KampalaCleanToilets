@@ -128,16 +128,18 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"  />
 
-
                     <TextView
-                        android:id="@+id/tvApproved"
+                        android:id="@+id/tvCharge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:textSize="14sp"
-                        tools:text="Approved?"
+                        tools:text="Charge"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
+
+
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -169,6 +171,17 @@
                         app:layout_constraintStart_toEndOf="@+id/ratingBar1"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="SpeakableTextPresentCheck"  />
+
+                    <TextView
+                        android:id="@+id/tvApproved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textSize="14sp"
+                        tools:text="Approved?"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
 
 <!--                    <ImageButton-->
 <!--                        android:id="@+id/imgFavorite"-->

@@ -246,6 +246,97 @@ and private nearby toilets in Kampala using Google Maps. CTL app also enables us
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_about4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/low_padding"
+            app:cardElevation="@dimen/low_padding"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/large_padding"
+                android:paddingEnd="@dimen/low_padding">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/low_padding"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvContactUs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Us"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/low_padding"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvInfo17"
+                        style="@android:style/Widget.Material.TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#17C0CA33"
+                        android:paddingStart="@dimen/low_padding"
+                        android:text="Aidah Nabukenya"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvInfo14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#17C0CA33"
+                        android:paddingStart="@dimen/low_padding"
+                        android:paddingBottom="@dimen/low_padding"
+                        android:text="aidahnabukenya@gmail.com"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/low_padding"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tvInfo15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/low_padding"
+                        android:background="#17C0CA33"
+                        android:text="James Kitaka"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvInfo16"
+                        style="@android:style/Widget.Material.TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#17C0CA33"
+                        android:paddingStart="@dimen/low_padding"
+                        android:paddingBottom="@dimen/low_padding"
+                        android:text="kitakajames5@gmail.com"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </ScrollView>

@@ -95,6 +95,9 @@ class ToiletsAdapter(private val context: Context) :
             binding.tvType.text = toilet.type
             binding.tvAddress.text = toilet.address
             binding.tvDivision.text = toilet.division
+            if (toilet.charge?.isNotEmpty() == true)
+                binding.tvCharge.text = toilet.charge?.let { buildString { append("Shs") } + it }
+
             if (currentLocation != null) {
                 binding.tvDistance.visibility = View.VISIBLE
                 binding.tvDistance.text = context.getString(

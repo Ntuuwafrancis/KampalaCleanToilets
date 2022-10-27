@@ -19,6 +19,7 @@
     <string name="closing_hours">Closing Hours</string>
     <string name="availability_status">Availability Status</string>
     <string name="charge">Charge</string>
+    <string name="currency_value">Shs </string>
     <string name="operational_status">Operational Status</string>
     <string name="phone_number">Phone Number</string>
     <string name="suggest_edit">SUGGEST EDIT</string>

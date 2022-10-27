@@ -161,7 +161,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/low_padding"
             android:background="#17C0CA33"
-            android:text="If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me via cleantoiletlocator@gmail.com"
+            android:text="If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact us via cleantoiletlocator@gmail.com"
             android:textSize="14sp"
             />
     </LinearLayout>

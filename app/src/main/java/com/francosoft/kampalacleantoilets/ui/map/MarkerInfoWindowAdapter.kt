@@ -31,7 +31,7 @@ class MarkerInfoWindowAdapter(
 
         // 2. Inflate view and set title, address, and rating
         binding.tvTitle.text = toilet.stitle
-        (toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
+        (toilet.openTime + " - " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
         binding.tvOpStatus.text = toilet.status
         binding.tvTotalRatings.text = buildString {
             append("(")
@@ -40,6 +40,8 @@ class MarkerInfoWindowAdapter(
         }
         binding.ratingBar1.rating = toilet.rating.toFloat()
         binding.tvType.text = toilet.type
+//        if (toilet.charge?.isNotEmpty() == true)
+//            binding.tvCharge.text = toilet.charge?.let { buildString { append("Shs") } + it }
 
         return view
     }
@@ -49,7 +51,7 @@ class MarkerInfoWindowAdapter(
         val toilet = marker.tag as? Toilet ?: return null
 
         binding.tvTitle.text = toilet.stitle
-        (toilet.openTime + " to " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
+        (toilet.openTime + " - " + toilet.closeTime).also { binding.tvOpenStatus.text = it }
         binding.tvOpStatus.text = toilet.status
         binding.tvTotalRatings.text = buildString {
             append("(")
@@ -59,6 +61,10 @@ class MarkerInfoWindowAdapter(
         binding.ratingBar1.rating = toilet.rating.toFloat()
         binding.tvType.text = toilet.type
         binding.tvAddress.text = toilet.address
+        binding.tvCharge.text = toilet.charge?.let { buildString { append("Shs") } + it }
+//        if (toilet.charge?.isNotEmpty() == true)
+
+
 
         return view
     }

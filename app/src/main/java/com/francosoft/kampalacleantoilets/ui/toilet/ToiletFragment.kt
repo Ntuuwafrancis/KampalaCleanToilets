@@ -157,16 +157,19 @@ class ToiletFragment : Fragment() {
         spOpStatus.isEnabled = false
 
         if (purpose.equals("approve")){
+            binding.tvLatestReviews.visibility = View.INVISIBLE
             binding.allReview.visibility = View.INVISIBLE
             binding.addReview.visibility = View.INVISIBLE
             changeFields("Approve", "Reject")
             toilet?.let { populateToiletDetails(it) }
             approveTvText(true)
         } else if (purpose.equals("edit")) {
+            binding.tvLatestReviews.visibility = View.VISIBLE
             binding.allReview.visibility = View.VISIBLE
             binding.addReview.visibility = View.VISIBLE
             toilet?.let { populateToiletDetails(it) }
         } else if (purpose.equals("new")){
+            binding.tvLatestReviews.visibility = View.INVISIBLE
             binding.allReview.visibility = View.INVISIBLE
             binding.addReview.visibility = View.INVISIBLE
             changeFields(getString(R.string.save), getString(R.string.cancel))
@@ -532,6 +535,8 @@ class ToiletFragment : Fragment() {
                         toilet.rating = 0.0
                         toilet.totalRating = 0
                         toilet.ratingTotal = 0.0
+                        if(toilet.charge?.isEmpty() == true)
+                            toilet.charge = "0"
                         saveToilet(toilet)
                         when(fragment){
                             "map" -> {
